@@ -1,0 +1,22 @@
+{
+  "tripletId": "57",
+  "title": "Object Byte Extent (0x57)",
+  "description": "Object Byte Extent triplet layout. Length and TID are not mapped here; payload starts at offset 2.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 4,
+      "name": "ByteExt",
+      "type": "UBIN",
+      "description": "Byte extent of object (low-order 4 bytes, unsigned binary, big-endian)."
+    },
+    {
+      "offset": 6,
+      "length": 4,
+      "name": "BytExtHi",
+      "type": "UBIN",
+      "description": "High-order bytes of the byte extent (unsigned binary, big-endian). Optional; present when triplet length is 10."
+    }
+  ],
+  "notes": "TID for this triplet is X'57'. Length field (offset 0) and TID (offset 1) are intentionally not mapped per instructions."
+}

@@ -1,0 +1,72 @@
+{
+  "tripletId": "4E",
+  "title": "Color Specification (0x4E)",
+  "description": "Color Specification triplet layout. Length and TID are not mapped here; payload starts at offset 2.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "Reserved",
+      "type": "UBIN",
+      "description": "Reserved byte; should be zero. Present for alignment and future use."
+    },
+    {
+      "offset": 3,
+      "length": 1,
+      "name": "ColSpc",
+      "type": "CODE",
+      "description": "Color space identifier.",
+      "enumMap": {
+        "01": "RGB",
+        "04": "CMYK",
+        "06": "Highlight color space",
+        "08": "CIELAB",
+        "40": "Standard OCA color space"
+      }
+    },
+    {
+      "offset": 4,
+      "length": 4,
+      "name": "Reserved2",
+      "type": "UBIN",
+      "description": "Reserved (4 bytes); should be zero."
+    },
+    {
+      "offset": 8,
+      "length": 1,
+      "name": "ColSize1",
+      "type": "UBIN",
+      "description": "Number of bits in component 1; see color space definitions."
+    },
+    {
+      "offset": 9,
+      "length": 1,
+      "name": "ColSize2",
+      "type": "UBIN",
+      "description": "Number of bits in component 2; see color space definitions."
+    },
+    {
+      "offset": 10,
+      "length": 1,
+      "name": "ColSize3",
+      "type": "UBIN",
+      "description": "Number of bits in component 3; see color space definitions."
+    },
+    {
+      "offset": 11,
+      "length": 1,
+      "name": "ColSize4",
+      "type": "UBIN",
+      "description": "Number of bits in component 4; see color space definitions."
+    },
+    {
+      "offset": 12,
+      "name": "Color",
+      "type": "CHAR",
+      "encoding": "EBCDIC",
+      "length": "variable",
+      "description": "Color specification payload; format depends on `ColSpc` value."
+    }
+  ],
+  "notes": "TID for this triplet is X'4E'. Length field (offset 0) and TID (offset 1) are intentionally not mapped per instructions. Color payload format depends on `ColSpc`."
+}

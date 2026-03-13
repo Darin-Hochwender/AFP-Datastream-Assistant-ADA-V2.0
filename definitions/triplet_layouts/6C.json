@@ -1,0 +1,60 @@
+{
+  "tripletId": "6C",
+  "title": "Resource Object Include (0x6C)",
+  "description": "Layout for triplet 0x6C: Resource Object Include. Tlength and Tid (offsets 0 and 1) are omitted from this mapping.",
+  "notes": "Offsets are relative to the triplet start. Tlength and Tid are intentionally not represented here.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "ObjType",
+      "type": "hex",
+      "description": "Object type (CODE, 1 byte).",
+      "required": true,
+      "enumMap": {
+        "DC": "Preprinted Form",
+        "DF": "Overlay (PFO) object",
+        "5F": "Overlay object (private use)"
+      }
+    },
+    {
+      "offset": 3,
+      "length": 8,
+      "name": "ObjName",
+      "type": "char",
+      "encoding": "EBCDIC",
+      "description": "Name of the object (EBCDIC CHAR, 8 bytes).",
+      "required": true
+    },
+    {
+      "offset": 11,
+      "length": 2,
+      "name": "XobjSet",
+      "type": "SBIN",
+      "description": "X axis origin for the object (signed binary, 2 bytes). Range -32768 to 32767.",
+      "required": true
+    },
+    {
+      "offset": 13,
+      "length": 2,
+      "name": "YobjSet",
+      "type": "SBIN",
+      "description": "Y axis origin for the object (signed binary, 2 bytes). Range -32768 to 32767.",
+      "required": true
+    },
+    {
+      "offset": 17,
+      "length": 2,
+      "name": "ObOrient",
+      "type": "hex",
+      "description": "Object rotation code (CODE, 2 bytes).",
+      "required": false,
+      "enumMap": {
+        "0000": "0 degrees",
+        "2D00": "90 degrees",
+        "5A00": "180 degrees",
+        "8700": "270 degrees"
+      }
+    }
+  ]
+}

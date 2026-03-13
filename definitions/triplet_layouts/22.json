@@ -1,0 +1,27 @@
+{
+  "tripletId": "22",
+  "title": "Extended Resource Local Identifier (0x22)",
+  "description": "Layout for triplet 0x22: ResType and ResLID fields as defined in the MO:DCA table.",
+  "notes": "Offsets are relative to the triplet start. This layout omits the length and Tid bytes (those are handled by the loader).",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "ResType",
+      "type": "enum",
+      "enumMap": {
+        "30": "Retired value",
+        "40": "Media Type resource",
+        "42": "Media Destination resource"
+      },
+      "description": "Specifies the resource type (CODE, 1 byte)."
+    },
+    {
+      "offset": 3,
+      "length": 4,
+      "name": "ResLID",
+      "type": "hex",
+      "description": "Extended resource local ID (4 bytes). Range X'00000000' - X'FFFFFFFF'. Interpretation may vary by ResType."
+    }
+  ]
+}

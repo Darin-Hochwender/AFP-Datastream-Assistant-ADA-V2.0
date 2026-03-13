@@ -1,0 +1,37 @@
+{
+  "tripletId": "21",
+  "title": "Resource Object Type (0x21)",
+  "description": "Layout for triplet 0x21: ObjType followed by ConData (constant data).",
+  "notes": "Offsets are relative to triplet start. This layout omits the triplet length and Tid bytes (those are handled at runtime).",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "ObjType",
+      "type": "enum",
+      "enumMap": {
+        "03": "Graphics (GOCA) object",
+        "05": "Bar Code (BCOCA) object",
+        "06": "Image (IOCA) object",
+        "40": "Font Character Set object",
+        "41": "Code Page object",
+        "42": "Coded Font object",
+        "92": "Object Container",
+        "9B": "Presentation Text (PTOCA) object with OEG",
+        "A8": "Document object",
+        "FB": "Page Segment object",
+        "FC": "Overlay object",
+        "FD": "Reserved",
+        "FE": "Form Map object"
+      },
+      "description": "Specifies the object type (CODE, 1 byte)."
+    },
+    {
+      "offset": 3,
+      "length": "variable",
+      "name": "ConData",
+      "type": "hex",
+      "description": "Constant data (CODE) that follows the ObjType. Length is determined by the triplet length minus header bytes."
+    }
+  ]
+}

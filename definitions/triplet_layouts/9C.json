@@ -1,0 +1,78 @@
+{
+  "tripletId": "9C",
+  "title": "Object Container Presentation Space Size (0x9C)",
+  "description": "Presentation space size triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "UBIN",
+      "length": 2,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 4,
+      "type": "CODE",
+      "length": 1,
+      "name": "PDFSize",
+      "description": "Parameter used to determine the PDF presentation space size",
+      "enumMap": {
+        "01": "MediaBox",
+        "02": "CropBox",
+        "03": "BleedBox",
+        "04": "TrimBox",
+        "05": "ArtBox"
+      }
+    },
+    {
+      "offset": 5,
+      "type": "CODE",
+      "length": 1,
+      "name": "XocBase",
+      "description": "Presentation space size unit base for the width (X axis)",
+      "enumMap": {
+        "00": "10 inches",
+        "01": "10 centimeters"
+      }
+    },
+    {
+      "offset": 6,
+      "type": "CODE",
+      "length": 1,
+      "name": "YocBase",
+      "description": "Presentation space size unit base for the height (Y axis)",
+      "enumMap": {
+        "00": "10 inches",
+        "01": "10 centimeters"
+      }
+    },
+    {
+      "offset": 7,
+      "type": "UBIN",
+      "length": 2,
+      "name": "XocUnits",
+      "description": "Presentation space size units per unit base for the width (1-32767)"
+    },
+    {
+      "offset": 9,
+      "type": "UBIN",
+      "length": 2,
+      "name": "YocUnits",
+      "description": "Presentation space size units per unit base for the height (1-32767)"
+    },
+    {
+      "offset": 11,
+      "type": "UBIN",
+      "length": 3,
+      "name": "XpsSize",
+      "description": "Presentation space width (extent along X axis) (1-32,767)"
+    },
+    {
+      "offset": 14,
+      "type": "UBIN",
+      "length": 3,
+      "name": "YpsSize",
+      "description": "Presentation space height (extent along Y axis) (1-32,767)"
+    }
+  ]
+}

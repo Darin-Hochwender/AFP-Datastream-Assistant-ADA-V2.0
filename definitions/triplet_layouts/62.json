@@ -1,0 +1,64 @@
+{
+  "tripletId": "62",
+  "title": "Local Date and Time Stamp (0x62)",
+  "description": "Local Date and Time Stamp triplet layout. Length and TID are not mapped here; payload starts at offset 2.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "StampType",
+      "type": "CODE",
+      "description": "Date/time stamp type: '00' = Creation, '01' = Retired value, '03' = Revision"
+    },
+    {
+      "offset": 3,
+      "length": 1,
+      "name": "THunYear",
+      "type": "CODE",
+      "description": "Hundreds position and implied thousands position of year AD. Examples: '40' = 19xx, 'F0'..'F9' = 20xx-29xx (encoded as hex digits)."
+    },
+    {
+      "offset": 4,
+      "length": 2,
+      "name": "TenYear",
+      "type": "CODE",
+      "description": "Tens and units position of year AD (two BCD/hex digits)."
+    },
+    {
+      "offset": 6,
+      "length": 3,
+      "name": "Day",
+      "type": "CODE",
+      "description": "Day of year (three-digit value encoded as three bytes/characters)."
+    },
+    {
+      "offset": 9,
+      "length": 2,
+      "name": "Hour",
+      "type": "CODE",
+      "description": "Hour of day (two digits)."
+    },
+    {
+      "offset": 11,
+      "length": 2,
+      "name": "Minute",
+      "type": "CODE",
+      "description": "Minute of hour (two digits)."
+    },
+    {
+      "offset": 13,
+      "length": 2,
+      "name": "Second",
+      "type": "CODE",
+      "description": "Second of minute (two digits)."
+    },
+    {
+      "offset": 15,
+      "length": 2,
+      "name": "HundSec",
+      "type": "CODE",
+      "description": "Hundredths of second (two digits)."
+    }
+  ],
+  "notes": "TID for this triplet is X'62'. Length field (offset 0) and TID (offset 1) are intentionally not mapped per instructions."
+}

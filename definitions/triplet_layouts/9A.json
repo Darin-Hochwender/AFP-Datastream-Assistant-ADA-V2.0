@@ -1,0 +1,50 @@
+{
+  "tripletId": "9A",
+  "title": "Image Resolution (0x9A)",
+  "description": "Image resolution triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "UBIN",
+      "length": 2,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 4,
+      "type": "CODE",
+      "length": 1,
+      "name": "XBase",
+      "description": "Unit base for image resolution in the X direction",
+      "enumMap": {
+        "00": "10 inches",
+        "01": "10 centimeters"
+      }
+    },
+    {
+      "offset": 5,
+      "type": "CODE",
+      "length": 1,
+      "name": "YBase",
+      "description": "Unit base for image resolution in the Y direction",
+      "enumMap": {
+        "00": "10 inches",
+        "01": "10 centimeters"
+      }
+    },
+    {
+      "offset": 6,
+      "type": "UBIN",
+      "length": 2,
+      "name": "XResol",
+      "description": "Number of image points in X direction per X unit base (1-32767)"
+    },
+    {
+      "offset": 8,
+      "type": "UBIN",
+      "length": 2,
+      "name": "YResol",
+      "description": "Number of image points in Y direction per Y unit base (1-32767)"
+    }
+  ]
+}

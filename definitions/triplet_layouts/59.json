@@ -1,0 +1,24 @@
+{
+  "tripletId": "59",
+  "title": "Object Structured Field Extent (0x59)",
+  "description": "Layout for triplet 0x59: Structured Field Extent triplet. Tlength and Tid (offsets 0 and 1) are omitted from this mapping.",
+  "notes": "Offsets are relative to the triplet start. Tlength and Tid are not represented here.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 4,
+      "name": "SFExt",
+      "type": "UBIN",
+      "description": "Number of structured fields in the object (UBIN, 4 bytes). Range X'00000000' - X'FFFFFFFF'.",
+      "required": true
+    },
+    {
+      "offset": 6,
+      "length": 4,
+      "name": "SFExtHi",
+      "type": "UBIN",
+      "description": "High-order bytes of the structured field extent (UBIN, 4 bytes). Optional; present when larger representation is used.",
+      "required": false
+    }
+  ]
+}

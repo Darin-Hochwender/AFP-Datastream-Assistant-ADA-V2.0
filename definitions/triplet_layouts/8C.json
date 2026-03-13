@@ -1,0 +1,65 @@
+{
+  "tripletId": "8C",
+  "title": "Locale Selector (0x8C)",
+  "description": "Locale selector triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "BITS",
+      "length": 1,
+      "name": "LocFlgs",
+      "description": "Flags that specify additional syntax information (see triplet semantics).",
+      "bitDefinitions": [
+        {
+          "bits": "0",
+          "name": "Reserved/seeSpec",
+          "description": "See triplet X'8C' semantics for bit definitions"
+        },
+        {
+          "bits": "1-7",
+          "name": "Reserved",
+          "description": "Reserved; should be zero"
+        }
+      ]
+    },
+    {
+      "offset": 4,
+      "type": "CHAR",
+      "length": 8,
+      "encoding": "UTF-16BE",
+      "name": "LangCode",
+      "description": "Language code as registered in ISO-639; encoding is UTF-16BE"
+    },
+    {
+      "offset": 12,
+      "type": "CHAR",
+      "length": 8,
+      "encoding": "UTF-16BE",
+      "name": "ScrptCde",
+      "description": "Script code as registered in ISO-15924; encoding is UTF-16BE"
+    },
+    {
+      "offset": 20,
+      "type": "CHAR",
+      "length": 8,
+      "encoding": "UTF-16BE",
+      "name": "RegCde",
+      "description": "Region code as registered in ISO-3166; encoding is UTF-16BE"
+    },
+    {
+      "offset": 28,
+      "type": "UBIN",
+      "length": 8,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 36,
+      "type": "CHAR",
+      "length": "variable",
+      "encoding": "UTF-16BE",
+      "name": "VarCde",
+      "description": "Variant code; encoding is UTF-16BE (optional, from offset 36 to triplet end)"
+    }
+  ]
+}

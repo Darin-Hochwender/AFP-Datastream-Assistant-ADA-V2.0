@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace AFPEngiineer_Explorer
+namespace AFPEngineer_Explorer
 {
     /// <summary>
     /// Interaction logic for App.xaml

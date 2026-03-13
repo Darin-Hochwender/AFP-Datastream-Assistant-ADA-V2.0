@@ -1,0 +1,15 @@
+{
+  "tripletId": "09",
+  "title": "(0x09)",
+  "description": "Generic shell layout: capture entire triplet payload as an EBCDIC string and display as ASCII.",
+  "elements": [
+    {
+      "offset": 2,
+      "name": "09Wip",
+      "type": "char",
+      "encoding": "EBCDIC",
+      "length": "variable",
+      "description": "Capture entire triplet payload starting at offset 2 and display as converted ASCII"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "tripletId": "80",
+  "title": "Attribute Qualifier (0x80)",
+  "description": "Attribute Qualifier triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "UBIN",
+      "length": 4,
+      "name": "SeqNum",
+      "description": "Sequence Number"
+    },
+    {
+      "offset": 6,
+      "type": "UBIN",
+      "length": 4,
+      "name": "LevNum",
+      "description": "Level Number"
+    }
+  ]
+}

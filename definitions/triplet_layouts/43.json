@@ -1,0 +1,15 @@
+{
+  "tripletId": "43",
+  "title": "Descriptor Position Triplet (0x43)",
+  "description": "Descriptor Position triplet. Triplet length is 3 bytes (including length and TID). Offsets 0 and 1 (length and TID) are standard and omitted here; payload starts at offset 2.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "DesPosID",
+      "type": "CODE",
+      "description": "Descriptor Position identifier. Valid values X'01'..X'7F' representing the associated Object Area Position structured field identifier."
+    }
+  ],
+  "notes": "TID should be X'43' for this triplet. The triplet length is fixed at 3 in most usages."
+}

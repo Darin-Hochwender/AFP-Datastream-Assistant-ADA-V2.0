@@ -1,0 +1,33 @@
+{
+  "tripletId": "74",
+  "title": "Toner Saver (0x74)",
+  "description": "Toner saver triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "CODE",
+      "length": 1,
+      "name": "TSvCtrl",
+      "description": "Specifies controls for the toner saver function",
+      "enumMap": {
+        "00": "Deactivate toner saver",
+        "01": "Activate toner saver",
+        "FF": "Use device default toner saver setting"
+      }
+    },
+    {
+      "offset": 3,
+      "type": "UBIN",
+      "length": 1,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 4,
+      "type": "UBIN",
+      "length": 2,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    }
+  ]
+}

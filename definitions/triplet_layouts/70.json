@@ -1,0 +1,16 @@
+{
+  "tripletId": "70",
+  "title": "Presentation Space Reset Mixing (0x70)",
+  "description": "Presentation Space Reset Mixing triplet layout. Payload captured as text when exact field definitions are not provided.",
+  "elements": [
+    {
+      "offset": 2,
+      "name": "ResetMix",
+      "type": "CHAR",
+      "encoding": "EBCDIC",
+      "length": "variable",
+      "description": "Triplet payload captured as EBCDIC text. Provide spec details to replace with explicit fields."
+    }
+  ],
+  "notes": "TID for this triplet is X'70'. If you have the exact field layout, I can replace the variable capture with explicit fields."
+}

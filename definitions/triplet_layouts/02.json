@@ -1,0 +1,63 @@
+{
+  "tripletId": "02",
+  "title": "GID Usage Triplet (0x02)",
+  "description": "Layout for triplet 0x02: FQNType at offset 2, FQNFmt at offset 3, and a variable-length FQName starting at offset 4.",
+  "notes": "GID can be up to 250 bytes in length. The data type of FQName is format-dependent (FQNFmt); for now treat as EBCDIC CHAR and convert to ASCII.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "FQNType",
+      "type": "enum",
+      "enumMap": {
+        "01": "Replace First GID name",
+        "07": "Font Family Name",
+        "08": "Font Typeface Name",
+        "09": "MO:DCA Resource Hierarchy Reference",
+        "0A": "Begin Resource Group Reference",
+        "0B": "Attribute GID",
+        "0C": "Process Element GID",
+        "0D": "Begin Page Group Reference",
+        "11": "Media Type Reference",
+        "12": "Media Destination Reference",
+        "41": "Color Management Resource (CMR) Reference",
+        "6E": "Data-object Font Base Font Identifier",
+        "7E": "Data-object Font Linked Font Identifier",
+        "83": "Begin Document Reference",
+        "84": "Resource Object Reference",
+        "85": "Code Page Name Reference",
+        "86": "Font Character Set Name Reference",
+        "87": "Begin Page Reference",
+        "8D": "Begin Medium Map Reference",
+        "8E": "Coded Font Name Reference",
+        "98": "Begin Document Index Reference",
+        "B0": "Begin Overlay Reference",
+        "BE": "Data Object Internal Resource Reference",
+        "CA": "Index Element GID",
+        "CE": "Other Object Data Reference",
+        "DE": "Data Object External Resource Reference",
+        "EE": "Tertiary Data Object External Resource Reference"
+      }
+    },
+    {
+      "offset": 3,
+      "length": 1,
+      "name": "FQNFmt",
+      "type": "enum",
+      "enumMap": {
+        "00": "Character string",
+        "10": "OID",
+        "20": "URL"
+      }
+    },
+    {
+      "offset": 4,
+      "length": "variable",
+      "maxLength": 250,
+      "name": "FQName",
+      "type": "char",
+      "encoding": "EBCDIC",
+      "description": "Fully-qualified name. Length is determined by the remaining triplet data. Interpret according to FQNFmt; currently displayed as converted CHAR from EBCDIC to ASCII."
+    }
+  ]
+}

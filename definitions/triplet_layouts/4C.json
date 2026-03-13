@@ -1,0 +1,32 @@
+{
+  "tripletId": "4C",
+  "title": "Object Area Size (0x4C)",
+  "description": "Object Area Size triplet layout. Length and TID are not mapped here; payload starts at offset 2.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "SizeType",
+      "type": "CODE",
+      "description": "Specifies the actual object area size to be used.",
+      "enumMap": {
+        "02": "Use specified object area size"
+      }
+    },
+    {
+      "offset": 3,
+      "length": 3,
+      "name": "XoaSize",
+      "type": "UBIN",
+      "description": "Object area extent for the X axis (unsigned binary, 3 bytes, big-endian)."
+    },
+    {
+      "offset": 6,
+      "length": 3,
+      "name": "YoaSize",
+      "type": "UBIN",
+      "description": "Object area extent for the Y axis (unsigned binary, 3 bytes, big-endian)."
+    }
+  ],
+  "notes": "TID for this triplet is X'4C'. Length field (offset 0) and TID (offset 1) are intentionally not mapped per instructions."
+}

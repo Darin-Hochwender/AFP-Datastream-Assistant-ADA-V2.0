@@ -1,0 +1,24 @@
+{
+  "tripletId": "04",
+  "title": "MapValue Triplet (0x04)",
+  "description": "Triplet 0x04 layout: MapValue code at offset 2.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "MapValue",
+      "type": "enum",
+      "enumMap": {
+        "00": "Position",
+        "10": "Position and trim",
+        "20": "Scale to fit",
+        "30": "Center and trim",
+        "41": "Migration mapping",
+        "42": "Migration mapping",
+        "50": "Migration mapping",
+        "60": "Scale to fill",
+        "70": "UP3i Print Data"
+      }
+    }
+  ]
+}

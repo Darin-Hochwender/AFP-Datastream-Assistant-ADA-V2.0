@@ -1,0 +1,22 @@
+{
+  "tripletId": "20",
+  "title": "Font Coded Graphic Character Set Global Identifier (0x20)",
+  "description": "Layout for triplet 0x20: Tlength, Tid, GCSGID and CPGID fields as defined in the MO:DCA table.",
+  "notes": "Offsets in this layout are relative to the triplet start. The UBIN Tlength at offset 0 indicates the triplet length. Tid at offset 1 should be 20 for this triplet.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 2,
+      "name": "GCSGID",
+      "type": "hex",
+      "description": "Graphic Character Set Global Identifier (CODE, 2 bytes). Specifies the GCS global identifier or the character set when value FFFF indicates code page."
+    },
+    {
+      "offset": 4,
+      "length": 2,
+      "name": "CPGID",
+      "type": "hex",
+      "description": "Code Page Global Identifier (CODE, 2 bytes). Specifies the code page global identifier."
+    }
+  ]
+}

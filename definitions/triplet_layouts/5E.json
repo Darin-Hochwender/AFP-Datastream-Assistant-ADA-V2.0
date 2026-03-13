@@ -1,0 +1,40 @@
+{
+  "tripletId": "5E",
+  "title": "Object Count (0x5E)",
+  "description": "Layout for triplet 0x5E: Object Count triplet. Tlength and Tid (offsets 0 and 1) are omitted from this mapping.",
+  "notes": "Offsets are relative to the triplet start. Tlength and Tid are not represented here.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "SubObj",
+      "type": "hex",
+      "description": "Subordinate object type (CODE, 1 byte). Example: X'AF' = Page.",
+      "required": true
+    },
+    {
+      "offset": 3,
+      "length": 1,
+      "name": "Reserved",
+      "type": "UNDF",
+      "description": "Reserved (should be zero).",
+      "required": false
+    },
+    {
+      "offset": 4,
+      "length": 4,
+      "name": "SObjNum",
+      "type": "UBIN",
+      "description": "Number of subordinate objects contained in this object (UBIN, 4 bytes).",
+      "required": true
+    },
+    {
+      "offset": 8,
+      "length": 4,
+      "name": "SObjNumHi",
+      "type": "UBIN",
+      "description": "High-order bytes of subordinate object count (UBIN, 4 bytes). Optional; present when extended length used.",
+      "required": false
+    }
+  ]
+}

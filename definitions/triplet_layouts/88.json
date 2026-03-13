@@ -1,0 +1,43 @@
+{
+  "tripletId": "88",
+  "title": "Finishing Fidelity (0x88)",
+  "description": "Finishing fidelity triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "CODE",
+      "length": 1,
+      "name": "StpFinEx",
+      "description": "Finishing exception continuation rule",
+      "enumMap": {
+        "01": "Stop presentation at point of first finishing exception and report exception",
+        "02": "Do not stop presentation due to finishing exceptions"
+      }
+    },
+    {
+      "offset": 3,
+      "type": "UBIN",
+      "length": 1,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 4,
+      "type": "CODE",
+      "length": 1,
+      "name": "RepFinEx",
+      "description": "Finishing exception reporting rule if exception does not stop presentation",
+      "enumMap": {
+        "01": "Report finishing exception",
+        "02": "Do not report finishing exception"
+      }
+    },
+    {
+      "offset": 5,
+      "type": "UBIN",
+      "length": 2,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    }
+  ]
+}

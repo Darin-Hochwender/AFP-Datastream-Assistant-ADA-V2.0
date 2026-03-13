@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "1.0",
+  "lastUpdated": "2026-01-11",
+  "controlSequences": [
+    { "hexId": "C1", "shortId": "SIM", "name": "Set Inline Margin", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSSIMM" },
+    { "hexId": "C3", "shortId": "SIA", "name": "Set Intercharacter Increment", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSSIA" },
+    { "hexId": "C3", "shortId": "SVI", "name": "Set Variable Space Character Increment", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSSVI" },
+    { "hexId": "C9", "shortId": "RMI", "name": "Relative Move Inline", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSRMI" },
+    { "hexId": "D1", "shortId": "SBI", "name": "Set Baseline Increment", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSSBI" },
+    { "hexId": "D5", "shortId": "RMB", "name": "Relative Move Baseline", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSRMB" },
+    { "hexId": "6D", "shortId": "GLC", "name": "Glyph Layout Control", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSGLC" },
+    { "hexId": "8B", "shortId": "GAR", "name": "Glyph Advance Run", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSGAR" },
+    { "hexId": "8F", "shortId": "GOR", "name": "Glyph Offset Run", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSGOR" },
+    { "hexId": "99", "shortId": "ENC", "name": "Encrypted Data", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSENC" },
+    { "hexId": "D3", "shortId": "AMB", "name": "Absolute Move Baseline", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSAMB" },
+    { "hexId": "C7", "shortId": "AMI", "name": "Absolute Move Inline", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSAMI" },
+    { "hexId": "DB", "shortId": "TRN", "name": "Transparent Data", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSTRN" },
+    { "hexId": "F1", "shortId": "SCFL", "name": "Set Coded Font  Local", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSSCA" },
+    { "hexId": "81", "shortId": "SEC", "name": "Set Extended Text Color", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSSEC" },
+    { "hexId": "75", "shortId": "STC", "name": "Set Text Color", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSSTC" },
+    { "hexId": "F7", "shortId": "STO", "name": "Set Text Orientation", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSSTO" },
+    { "hexId": "E7", "shortId": "DBR", "name": "Draw B-axis Rule", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf" },
+    { "hexId": "E5", "shortId": "DIR", "name": "Draw I-axis Rule", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf" }
+  ]
+}

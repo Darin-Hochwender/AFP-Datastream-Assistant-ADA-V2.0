@@ -1,0 +1,15 @@
+{
+  "tripletId": "25",
+  "title": "Resource Section Number (0x25)",
+  "description": "Layout for triplet 0x25: ResSNum specifies the resource section number.",
+  "notes": "Offsets are relative to the triplet start. Length and Tid are handled by the loader.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "ResSNum",
+      "type": "hex",
+      "description": "Resource section number (1 byte). Range X'00'–X'FF'."
+    }
+  ]
+}

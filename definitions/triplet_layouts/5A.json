@@ -1,0 +1,40 @@
+{
+  "tripletId": "5A",
+  "title": "Object Offset (0x5A)",
+  "description": "Object Offset triplet layout. Length and TID are not mapped here; payload starts at offset 2.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "ObjTpe",
+      "type": "CODE",
+      "description": "Object type to be counted. Example values: 'A8' = Document, 'AF' = Page or paginated object.",
+      "enumMap": {
+        "A8": "Document",
+        "AF": "Page or paginated object"
+      }
+    },
+    {
+      "offset": 3,
+      "length": 1,
+      "name": "Reserved",
+      "type": "UBIN",
+      "description": "Reserved byte; should be zero."
+    },
+    {
+      "offset": 4,
+      "length": 4,
+      "name": "ObjOset",
+      "type": "UBIN",
+      "description": "Number of objects that precede the selected object in the document or print file (low-order 4 bytes, unsigned big-endian)."
+    },
+    {
+      "offset": 8,
+      "length": 4,
+      "name": "ObjOstHi",
+      "type": "UBIN",
+      "description": "High-order bytes of the object count (unsigned big-endian). Optional; present when triplet length is 12."
+    }
+  ],
+  "notes": "TID for this triplet is X'5A'. Length field (offset 0) and TID (offset 1) are intentionally not mapped per instructions."
+}

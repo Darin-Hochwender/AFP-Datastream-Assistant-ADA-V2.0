@@ -1,0 +1,24 @@
+{
+  "tripletId": "68",
+  "title": "Medium Orientation (0x68)",
+  "description": "Layout for triplet 0x68: Medium Orientation. Tlength and Tid (offsets 0 and 1) are omitted from this mapping.",
+  "notes": "Offsets are relative to the triplet start. Tlength and Tid are intentionally not represented here.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "MedOrient",
+      "type": "hex",
+      "description": "Orientation of the medium presentation space (CODE, 1 byte).",
+      "required": true,
+      "enumMap": {
+        "00": "Portrait",
+        "01": "Landscape",
+        "02": "Reverse Portrait",
+        "03": "Reverse Landscape",
+        "04": "Portrait 90",
+        "05": "Landscape 90"
+      }
+    }
+  ]
+}

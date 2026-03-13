@@ -1,0 +1,21 @@
+{
+  "tripletId": "2D",
+  "title": "Object Byte Offset Triplet (0x2D)",
+  "description": "Specifies a byte offset for an object within the document. Offsets 0 and 1 (length and TID) are standard and omitted here; the remaining fields are relative to the triplet payload start (first payload byte at offset 2).",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 4,
+      "name": "DirByOff",
+      "type": "UBIN",
+      "description": "Low-order 4 bytes of the byte offset (big-endian). If bytes 6-9 are not present, the object offset is expressed in this field; otherwise combine with DirByHi. Value X'FFFFFFFF' indicates the object is outside the document."
+    },
+    {
+      "offset": 6,
+      "length": 4,
+      "name": "DirByHi",
+      "type": "UBIN",
+      "description": "High-order 4 bytes of the byte offset (big-endian). Present only when the triplet length is 10."
+    }
+  ]
+}

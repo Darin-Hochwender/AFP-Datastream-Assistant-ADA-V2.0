@@ -1,0 +1,21 @@
+{
+  "tripletId": "FF",
+  "title": "Triplet Extender (0xFF)",
+  "description": "Extends the data field of the previous triplet. Do not include the triplet length or TID in this layout.",
+  "elements": [
+    {
+      "offset": 2,
+      "name": "Reserved",
+      "type": "UBIN",
+      "length": 2,
+      "description": "Reserved; should be zero."
+    },
+    {
+      "offset": 4,
+      "name": "DatExt",
+      "type": "bytes",
+      "length": "variable",
+      "description": "Data bytes that extend the data field of the previous triplet."
+    }
+  ]
+}

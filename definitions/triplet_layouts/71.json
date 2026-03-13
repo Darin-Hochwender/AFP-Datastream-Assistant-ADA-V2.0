@@ -1,0 +1,6 @@
+{
+  "tripletId": "71",
+  "title": "Presentation Space Mixing Rules (0x71)",
+  "description": "Generic shell layout: capture entire triplet payload as an EBCDIC string and display as ASCII.",
+  "elements": [ { "offset": 2, "name": "71Wip", "type": "char", "encoding": "EBCDIC", "length": "variable", "description": "Capture entire triplet payload starting at offset 2 and display as converted ASCII" } ]
+}

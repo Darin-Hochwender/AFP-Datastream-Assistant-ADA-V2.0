@@ -1,0 +1,37 @@
+{
+  "tripletId": "83",
+  "title": "Presentation Control (0x83)",
+  "description": "Presentation control triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "BITS",
+      "length": 1,
+      "name": "PRSFlg",
+      "description": "Presentation control flags (bit field).",
+      "bitDefinitions": [
+        {
+          "bit": 0,
+          "name": "ObjectViewControl",
+          "values": {
+            "0": "Specified object is intended for viewing (architected default if omitted)",
+            "1": "Specified object is not intended for viewing"
+          }
+        },
+        {
+          "bit": 1,
+          "name": "ObjectIndexingControl",
+          "values": {
+            "0": "Specified object is intended to be indexed (architected default if omitted)",
+            "1": "Specified object is not intended to be indexed"
+          }
+        },
+        {
+          "bits": "2-7",
+          "name": "Reserved",
+          "description": "Reserved; should be zero"
+        }
+      ]
+    }
+  ]
+}

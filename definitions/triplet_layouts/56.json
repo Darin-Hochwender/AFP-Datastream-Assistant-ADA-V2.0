@@ -1,0 +1,15 @@
+{
+  "tripletId": "56",
+  "title": "Medium Map Page Number (0x56)",
+  "description": "Medium Map Page Number triplet layout. Length and TID are not mapped here; payload starts at offset 2.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 4,
+      "name": "PageNum",
+      "type": "UBIN",
+      "description": "Sequence number of page (unsigned binary, 4 bytes, big-endian). Range X'00000001' to X'7FFFFFFF'."
+    }
+  ],
+  "notes": "TID for this triplet is X'56'. Length field (offset 0) and TID (offset 1) are intentionally not mapped per instructions."
+}

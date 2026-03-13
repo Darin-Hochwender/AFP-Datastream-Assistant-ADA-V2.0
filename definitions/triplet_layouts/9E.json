@@ -1,0 +1,22 @@
+{
+  "tripletId": "9E",
+  "title": "Setup Name (0x9E)",
+  "description": "Setup name triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "UBIN",
+      "length": 2,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 4,
+      "type": "CHAR",
+      "length": "variable",
+      "encoding": "UTF-16BE",
+      "name": "SetupName",
+      "description": "Setup name; encoding is UTF-16BE (bytes 4..end)"
+    }
+  ]
+}

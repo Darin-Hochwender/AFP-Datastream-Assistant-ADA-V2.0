@@ -1,0 +1,246 @@
+<Window x:Class="AFPEngineer_Explorer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AFP Insight - Systems Engineer Edition" Height="900" Width="1200"
+        Background="#F0F0F0">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Background="#FFFFFF" BorderBrush="#CCCCCC" BorderThickness="0,0,1,0">
+            <DockPanel Margin="15">
+                <Button x:Name="OpenFileBtn" 
+                        Content="?? Open AFP File" 
+                        Click="OpenFile_Click" 
+                        DockPanel.Dock="Top" 
+                        Height="40" 
+                        FontWeight="Bold"
+                        Background="#007ACC" 
+                        Foreground="White"
+                        Margin="0,0,0,15"/>
+
+                <TextBlock Text="Structured Fields (MO:DCA)" DockPanel.Dock="Top" FontWeight="Bold" Margin="0,0,0,5"/>
+
+                <Grid DockPanel.Dock="Top" Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="SearchBox" Margin="0,0,5,0" ToolTip="Search by Name, Acronym, or Hex ID"/>
+                    <Button x:Name="SearchPrevBtn" Grid.Column="1" Content="&#9664; Prev" Width="55" Margin="0,0,2,0" Click="SearchPrevBtn_Click" Background="#EEEEEE"/>
+                    <Button x:Name="SearchNextBtn" Grid.Column="2" Content="Next &#9654;" Width="55" Click="SearchNextBtn_Click" Background="#EEEEEE" IsDefault="True"/>
+                </Grid>
+
+                <TreeView x:Name="AfpTreeView" Background="#F9F9F9" 
+                          VirtualizingStackPanel.IsVirtualizing="True" 
+                          VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                            <Setter Property="Foreground" Value="{Binding ForegroundBrush}" />
+                            <Setter Property="Background" Value="{Binding BackgroundBrush}" />
+                            <Setter Property="FontWeight" Value="{Binding FontWeight}" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding DisplayName}" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </DockPanel>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="FieldNameTxt" Text="Select a field to begin..." FontSize="18" Margin="0,0,0,10" FontWeight="Bold" Foreground="Blue"/>
+
+            <Grid x:Name="LoadingOverlay" Grid.RowSpan="2" Background="#80FFFFFF" Panel.ZIndex="999" Visibility="Collapsed">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Loading..." FontSize="24" FontWeight="Bold" Foreground="Blue"/>
+                </StackPanel>
+            </Grid>
+
+            <TabControl x:Name="MainTabControl" Grid.Row="1" Margin="0,0,0,10">
+                <TabItem x:Name="ExploreTab" Header="Explore" Height="30" Width="100">
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Margin="10,10,10,5">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <Button x:Name="ExplorePrevBtn" Content="&lt;" Width="30" Height="25" Margin="0,0,5,0" Click="ExplorePrevBtn_Click" ToolTip="Previous Structured Field"/>
+                                <Button x:Name="ExploreNextBtn" Content="&gt;" Width="30" Height="25" Margin="0,0,10,0" Click="ExploreNextBtn_Click" ToolTip="Next Structured Field"/>
+                                <TextBlock x:Name="ExploreTitleTxt" FontSize="16" FontWeight="Bold" Foreground="Blue" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <TextBlock x:Name="ExploreDocLinkBlock" Margin="0,5,0,0" Visibility="Collapsed">
+                                <Hyperlink x:Name="ExploreLink" RequestNavigate="Hyperlink_RequestNavigate">
+                                    <TextBlock Text="View IBM Documentation" />
+                                </Hyperlink>
+                            </TextBlock>
+                            <TextBlock x:Name="ExploreOffsetTxt" Margin="0,5,0,0" FontSize="14"/>
+                            <TextBlock x:Name="ExploreLengthTxt" Margin="0,5,0,0" FontSize="14"/>
+                            <Button x:Name="ViewImageBtn" Content="?? View Container Image" Margin="0,10,0,0" Padding="5" Width="200" HorizontalAlignment="Left" Visibility="Collapsed" Click="ViewImage_Click" Background="#4CAF50" Foreground="White" FontWeight="Bold"/>
+                              <Button x:Name="AskAIBtn" Content="? Explain Field with AI" Margin="0,10,0,0" Padding="5" Width="200" HorizontalAlignment="Left" Visibility="Collapsed" Click="AskAIBtn_Click" Background="#0078D4" Foreground="White" FontWeight="Bold"/>
+                              <TextBox x:Name="AiResponseTxt" Margin="0,10,0,0" Padding="5" TextWrapping="Wrap" Background="#F0F8FF" 
+                                       Visibility="Collapsed" IsReadOnly="True" MinHeight="100" MaxHeight="300" VerticalScrollBarVisibility="Auto"/>
+                        </StackPanel>
+                        <ScrollViewer x:Name="ExploreScrollViewer" Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                            <StackPanel Margin="0,0,0,10">
+                                <ListView x:Name="ExploreListView" Margin="10,0,10,10" BorderBrush="#FFAAAAAA" BorderThickness="1" AlternationCount="2" PreviewMouseWheel="ListView_PreviewMouseWheel">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="BorderBrush" Value="#FFCCCCCC"/>
+                                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                                    <Setter Property="Background" Value="#FFF7F7F7" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="offset" DisplayMemberBinding="{Binding Offset}" Width="60" />
+                                            <GridViewColumn Header="length" DisplayMemberBinding="{Binding Length}" Width="60" />
+                                            <GridViewColumn Header="type" DisplayMemberBinding="{Binding Type}" Width="80" />
+                                            <GridViewColumn Header="displayName" DisplayMemberBinding="{Binding DisplayName}" Width="150" />
+                                            <GridViewColumn Header="description" Width="200">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Margin="0" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="value" Width="150">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Value}" TextWrapping="Wrap" Margin="0" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="required" DisplayMemberBinding="{Binding Required}" Width="60" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                
+                                <ItemsControl x:Name="TripletsItemsControl" Margin="10,0,10,10">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Margin="0,0,0,20">
+                                                <TextBlock FontSize="15" FontWeight="Bold" Margin="0,0,0,5">
+                                                    <Hyperlink Tag="{Binding}" Click="TripletHyperlink_Click">
+                                                        <Run Text="{Binding Heading}" />
+                                                    </Hyperlink>
+                                                </TextBlock>
+                                                <ListView ItemsSource="{Binding Rows}" BorderBrush="#FFAAAAAA" BorderThickness="1" AlternationCount="2" PreviewMouseWheel="ListView_PreviewMouseWheel">
+                                                    <ListView.ItemContainerStyle>
+                                                        <Style TargetType="ListViewItem">
+                                                            <Setter Property="BorderBrush" Value="#FFCCCCCC"/>
+                                                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                                                    <Setter Property="Background" Value="#FFF7F7F7" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ListView.ItemContainerStyle>
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Header="offset" DisplayMemberBinding="{Binding Offset}" Width="60"/>
+                                                            <GridViewColumn Header="field description" Width="300">
+                                                                <GridViewColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding FieldDescription}" TextWrapping="Wrap" />
+                                                                    </DataTemplate>
+                                                                </GridViewColumn.CellTemplate>
+                                                            </GridViewColumn>
+                                                            <GridViewColumn Header="value" Width="300">
+                                                                <GridViewColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding Value}" TextWrapping="Wrap" />
+                                                                    </DataTemplate>
+                                                                </GridViewColumn.CellTemplate>
+                                                            </GridViewColumn>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <TextBlock x:Name="ExploreFallbackTxt" Margin="10" TextWrapping="Wrap" Visibility="Collapsed" FontSize="14"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Hexdump" Height="30" Width="100">
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Background="#EEE" Padding="5">
+                            <TextBlock x:Name="HexdumpHeaderTxt" FontFamily="Consolas" FontSize="13" />
+                        </Border>
+                        <TextBox x:Name="HexdumpTxt" Grid.Row="1" FontFamily="Consolas" TextWrapping="NoWrap" AcceptsReturn="True" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="5"/>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="ImageViewerTab" Header="Image Viewer" Height="30" Width="100" Visibility="Collapsed">
+                    <Grid Background="White">
+                        <Image x:Name="ContainerImage" Margin="10" Stretch="Uniform" />
+                        <TextBlock x:Name="ImageErrorTxt" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="DocumentDisplayTab" Header="Document Display" Height="30" Width="130">
+                    <Grid Background="#E5E5E5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <!-- Toolbar -->
+                        <Border Background="White" BorderBrush="#CCCCCC" BorderThickness="0,0,0,1" Padding="5">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button x:Name="DocPrevPageBtn" Content="&lt; Prev" Margin="5" Padding="10,5" Click="DocPrevPageBtn_Click"/>
+                                <TextBlock x:Name="DocPageInfoTxt" Text="Page 1 of 1" VerticalAlignment="Center" Margin="10,0" FontWeight="Bold"/>
+                                <Button x:Name="DocNextPageBtn" Content="Next &gt;" Margin="5" Padding="10,5" Click="DocNextPageBtn_Click"/>
+                                <Border Width="1" Background="#CCCCCC" Margin="10,2"/>
+                                <Button x:Name="DocZoomOutBtn" Content=" - " Margin="5" Padding="10,5" Click="DocZoomOutBtn_Click" ToolTip="Zoom Out"/>
+                                <TextBlock x:Name="DocZoomTxt" Text="100%" VerticalAlignment="Center" Margin="5,0"/>
+                                <Button x:Name="DocZoomInBtn" Content=" + " Margin="5" Padding="10,5" Click="DocZoomInBtn_Click" ToolTip="Zoom In"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Canvas Container -->
+                        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#555555">
+                            <Viewbox x:Name="DocumentViewbox" Stretch="Uniform" StretchDirection="Both" Margin="20">
+                                <Border Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="5" Opacity="0.5"/>
+                                    </Border.Effect>
+                                    <Canvas x:Name="DocumentCanvas" Width="816" Height="1056" Background="White">
+                                        <TextBlock Text="Document Rendering Canvas (Placeholder)" Foreground="#CCCCCC" FontSize="24" Canvas.Left="200" Canvas.Top="500"/>
+                                    </Canvas>
+                                </Border>
+                            </Viewbox>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>
+

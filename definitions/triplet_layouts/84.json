@@ -1,0 +1,35 @@
+{
+  "tripletId": "84",
+  "title": "Font Resolution and Metric Technology (0x84)",
+  "description": "Font resolution and metric technology triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "CODE",
+      "length": 1,
+      "name": "MetTech",
+      "description": "Metric technology",
+      "enumMap": {
+        "01": "Fixed-metric technology",
+        "02": "Relative-metric technology"
+      }
+    },
+    {
+      "offset": 3,
+      "type": "CODE",
+      "length": 1,
+      "name": "RPuBase",
+      "description": "Raster-pattern resolution unit base",
+      "enumMap": {
+        "00": "10 inches"
+      }
+    },
+    {
+      "offset": 4,
+      "type": "UBIN",
+      "length": 2,
+      "name": "RPUnits",
+      "description": "Raster-pattern resolution units per unit base (range X'0960'..X'0B88')"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "tripletId": "4B",
+  "title": "Measurement Units (0x4B)",
+  "description": "Measurement Units triplet layout. Length and TID are not mapped here; payload starts at offset 2.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "XoaBase",
+      "type": "CODE",
+      "description": "Presentation space unit base for the X axis.",
+      "enumMap": {
+        "00": "10 inches",
+        "01": "10 centimeters"
+      }
+    },
+    {
+      "offset": 3,
+      "length": 1,
+      "name": "YoaBase",
+      "type": "CODE",
+      "description": "Presentation space unit base for the Y axis.",
+      "enumMap": {
+        "00": "10 inches",
+        "01": "10 centimeters"
+      }
+    },
+    {
+      "offset": 4,
+      "length": 2,
+      "name": "XoaUnits",
+      "type": "UBIN",
+      "description": "Presentation space units per unit base for the X axis (unsigned binary, 2 bytes)."
+    },
+    {
+      "offset": 6,
+      "length": 2,
+      "name": "YoaUnits",
+      "type": "UBIN",
+      "description": "Presentation space units per unit base for the Y axis (unsigned binary, 2 bytes)."
+    }
+  ],
+  "notes": "TID for this triplet is X'4B'. Length field (offset 0) and TID (offset 1) are intentionally not mapped per instructions."
+}

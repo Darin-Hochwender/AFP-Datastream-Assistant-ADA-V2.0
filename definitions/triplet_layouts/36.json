@@ -1,0 +1,22 @@
+{
+  "tripletId": "36",
+  "title": "Attribute Value Triplet (0x36)",
+  "description": "Carries an attribute value. Offsets 0 and 1 (length and TID) are standard and omitted here. Offsets 2-3 are reserved and should be zero; offset 4..n contain the attribute value (EBCDIC).",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 2,
+      "name": "Reserved",
+      "type": "NOP",
+      "description": "Reserved bytes; should be zero."
+    },
+    {
+      "offset": 4,
+      "length": "variable",
+      "name": "AttVal",
+      "type": "CHAR",
+      "encoding": "EBCDIC",
+      "description": "Attribute value string in EBCDIC, occupying bytes 4 through the end of the triplet payload."
+    }
+  ]
+}

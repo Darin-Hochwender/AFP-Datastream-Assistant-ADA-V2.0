@@ -1,0 +1,39 @@
+{
+  "tripletId": "50",
+  "title": "Encoding Scheme ID (0x50)",
+  "description": "Triplet X'50' Encoding Scheme Identifier. Offsets 0 and 1 (length and TID) are standard and omitted from individual element mappings.",
+  "elements": [
+    {
+      "offset": 0,
+      "length": 1,
+      "name": "Tlength",
+      "type": "UBIN",
+      "description": "Length of the triplet, including Tlength (offset 0).",
+      "required": true
+    },
+    {
+      "offset": 1,
+      "length": 1,
+      "name": "Tid",
+      "type": "CODE",
+      "description": "Identifies the Encoding Scheme ID triplet (should be X'50').",
+      "required": true
+    },
+    {
+      "offset": 2,
+      "length": 2,
+      "name": "ESidCP",
+      "type": "CODE",
+      "description": "Encoding Scheme Identifier for Code Page. See 'Triplet X'50' Semantics' in AFP reference.",
+      "required": true
+    },
+    {
+      "offset": 4,
+      "length": 2,
+      "name": "ESidUD",
+      "type": "CODE",
+      "description": "Encoding Scheme Identifier for User Data (optional). See 'Triplet X'50' Semantics' in AFP reference.",
+      "required": false
+    }
+  ]
+}

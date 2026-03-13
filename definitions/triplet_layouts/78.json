@@ -1,0 +1,25 @@
+{
+  "tripletId": "78",
+  "title": "Font Fidelity (0x78)",
+  "description": "Font fidelity triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "CODE",
+      "length": 1,
+      "name": "StpFntEx",
+      "description": "Font resolution exception continuation rule",
+      "enumMap": {
+        "01": "Stop presentation at point of first font resolution exception and report exception",
+        "02": "Do not stop presentation because of font resolution exceptions"
+      }
+    },
+    {
+      "offset": 3,
+      "type": "UBIN",
+      "length": 4,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    }
+  ]
+}

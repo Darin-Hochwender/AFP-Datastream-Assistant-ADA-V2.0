@@ -1,0 +1,31 @@
+{
+  "tripletId": "8E",
+  "title": "UP3i Finishing Operation (0x8E)",
+  "description": "Layout for UP3i Finishing Operation triplet X'8E' per specification.",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "UBIN",
+      "name": "Seqnum",
+      "range": "X'00'-X'FF'",
+      "meaning": "Sequence number",
+      "mandatory": true
+    },
+    {
+      "offset": 3,
+      "type": "UBIN",
+      "name": "Reserved",
+      "range": "X'00'",
+      "meaning": "Reserved; should be zero",
+      "mandatory": true
+    },
+    {
+      "offset": "4-n",
+      "type": "UP3iDat",
+      "name": "UP3iDat",
+      "range": "bytes 4 - end",
+      "meaning": "Finishing operation data as defined in the UP3i Specification; this parameter contains bytes 4–end of the UP3i Form Finishing Operating (X'03') triplet",
+      "mandatory": true
+    }
+  ]
+}

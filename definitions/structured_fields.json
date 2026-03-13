@@ -1,0 +1,3995 @@
+{
+  "schemaVersion": "1.0",
+  "lastUpdated": "2026-01-08",
+  "sfDefinitions": [
+    {
+      "sfId": "BAG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BAGHEAD",
+        "repeatingGroup": false
+      },
+      "description": "The Begin Active Environment Group structured field begins an Active Environment Group, which establishes the environment parameters for the page or overlay. The scope of the active environment group is the containing page or overlay.",
+      "layout": [
+        {
+          "name": "GroupName",
+          "displayName": "GroupName",
+          "description": "Group name (payload offset 0, length 8)",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-defining triplets",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x65",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BBC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BBCHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "BCdoName",
+          "displayName": "BCdoName",
+          "description": "Name of the bar code data object",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x62, 0x65, 0x72",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BCA",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=BCAHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "BCF",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk0525F818",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "CFName",
+          "displayName": "CFName",
+          "description": "Coded Font Name",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BCP",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk0C56FFF4",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "CPName",
+          "displayName": "CPName",
+          "description": "Code Page Name",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-defining triplets",
+          "type": "TRIPLETS",
+          "triplets": "0x62, 0x63, 0x64",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BDA",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/bcoca-reference-11.pdf#nameddest=BDAHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "BDD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BDDHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "BDG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BDGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "DEGName",
+          "displayName": "Document Environment Name",
+          "description": "Name of Document Environment Group",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x65",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BDI",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BDIHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "IndxName",
+          "displayName": "IndxName",
+          "description": "Name of document index",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x62, 0x65, 0x72",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BDT",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BDTHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "DocName",
+          "displayName": "Begin Document Name",
+          "description": "Document name",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x18, 0x65, 0x72, 0x8F",
+          "offset": {
+            "begin": 10,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BFG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BFGHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "BFM",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BFMHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "FMName",
+          "displayName": "FMName",
+          "description": "Name of the form map",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x62, 0x65, 0x72",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BFN",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk045D98AD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "CSName",
+          "displayName": "CSName",
+          "description": "Font Character Set Name",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x62, 0x63, 0x64, 0x65",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BGR",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BGRHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "GdoName",
+          "displayName": "GdoName",
+          "description": "Name of graphics data object",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x62, 0x65, 0x72",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BII",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BIIHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "BIM",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BIMHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "IdoName",
+          "displayName": "IdoName",
+          "description": "Name of the image data object",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x62, 0x65, 0x72",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BMM",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BMMHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "MMName",
+          "displayName": "MMName",
+          "description": "Name of the medium map",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x45, 0x65",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BMO",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BMOHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "OvlyName",
+          "displayName": "OvlyName",
+          "description": "Overlay name (payload offset 0, length 8)",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x62, 0x65, 0x72",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BNG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BNGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "PGrpName",
+          "displayName": "PGrpName",
+          "description": "Name of the page group)",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x56, 0x5E, 0x65, 0x83, 0x9D, 0x72",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BOC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BOCHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "ObjCName",
+          "displayName": "ObjCName",
+          "description": "Name of the object container.",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x10, 0x57, 0x62, 0x65, 0x72",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BOG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BOGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "OEGName",
+          "displayName": "OEGName",
+          "description": "Name of the object container.",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x65",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BPF",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BPFHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "PFName",
+          "displayName": "PFName",
+          "description": "Name of the print file",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x18, 0x5E, 0x65, 0x72, 0x8F",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BPG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BPGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "PageName",
+          "displayName": "PageName",
+          "description": "Name of the page",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x56, 0x65, 0x81, 0x83",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BPS",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BPSHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "PsegName",
+          "displayName": "PsegName",
+          "description": "Name of the page segment",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x62, 0x65, 0x72",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BPT",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BPTHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "PTdoName",
+          "displayName": "PTdoName",
+          "description": "Name of the presentation text data object",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x62, 0x65, 0x72",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BRG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BRGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "RGrpName",
+          "displayName": "RGrpName",
+          "description": "Name of the resource group",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02, 0x62, 0x65, 0x72",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BRS",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BRSHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "RSName",
+          "displayName": "RSName",
+          "description": "Identifier of the resource",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x10, 0x02, 0x21, 0x65",
+          "offset": {
+            "begin": 10,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "BSG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=BSGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "REGName",
+          "displayName": "REGName",
+          "description": "Name of the resource environment group",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x65",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "CDD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=CDDHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "Retired",
+          "displayName": "Retired",
+          "description": "Retired.",
+          "offset": {
+            "begin": 0,
+            "length": 12
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x4E, 0x5A, 0x9A, 0x9C",
+          "offset": {
+            "begin": 12,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "CFC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk066EDFED",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "CFIRGLen",
+          "displayName": "CFIRGLen",
+          "description": "CFIRGLen",
+          "offset": {
+            "begin": 0,
+            "length": 1
+          },
+          "type": "CHAR",
+          "required": true
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x79",
+          "offset": {
+            "begin": 2,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "CFI",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk473B18D8",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "FCSName",
+          "displayName": "FCSName",
+          "description": "Font Character Set Name",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": true
+        },
+        {
+          "name": "CPName",
+          "displayName": "CPName",
+          "description": "Code Page Name",
+          "offset": {
+            "begin": 8,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": true
+        },
+        {
+          "name": "SVSize",
+          "displayName": "SVSize",
+          "description": "Specified Vertical Font Size, in 20ths of a point",
+          "offset": {
+            "begin": 16,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "SHScale",
+          "displayName": "SHScale",
+          "description": "Specified Horizontal Scale Factor, in 20ths of a point",
+          "offset": {
+            "begin": 18,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "Reserved",
+          "displayName": "Reserved",
+          "description": "Reserved (should be X'00000000')",
+          "offset": {
+            "begin": 20,
+            "length": 4
+          },
+          "type": "UNDF",
+          "required": true
+        },
+        {
+          "name": "Section",
+          "displayName": "Section",
+          "description": "Section Number: X'00' single-byte, X'41'-X'FE' double-byte raster, X'FF' reserved",
+          "offset": {
+            "begin": 24,
+            "length": 1
+          },
+          "type": "UBIN",
+          "required": true
+        }
+      ]
+    },
+    {
+      "sfId": "CPC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk157B2A79",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "DefCharID",
+          "displayName": "DefCharID",
+          "description": "Default Graphic Character Global ID (payload offset 0-7)",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": true
+        },
+        {
+          "name": "PrtFlags",
+          "displayName": "PrtFlags",
+          "description": "Default Character Use Flags (bits)",
+          "offset": {
+            "begin": 8,
+            "length": 1
+          },
+          "type": "BITS",
+          "required": true
+        },
+        {
+          "name": "CPIRGLen",
+          "displayName": "CPIRGLen",
+          "description": "CPI Repeating Group Length: X'0A' single-byte code page, X'0B' double-byte code page, X'FE' single-byte including Unicode scalar values, X'FF' double-byte including Unicode scalar values",
+          "offset": {
+            "begin": 9,
+            "length": 1
+          },
+          "type": "CODE",
+          "required": true
+        },
+        {
+          "name": "VSCharSN",
+          "displayName": "VSCharSN",
+          "description": "Space Character Section Number (X'00'-X'FF')",
+          "offset": {
+            "begin": 10,
+            "length": 1
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "VSChar",
+          "displayName": "VSChar",
+          "description": "Space Character Code Point (X'00'-X'FF')",
+          "offset": {
+            "begin": 11,
+            "length": 1
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "VSFlags",
+          "displayName": "VSFlags",
+          "description": "Code Page Use Flags (bits)",
+          "offset": {
+            "begin": 12,
+            "length": 1
+          },
+          "type": "BITS",
+          "required": true
+        },
+        {
+          "name": "UnicodeScalarValue",
+          "displayName": "UnicodeScalarValue",
+          "description": "Optional 4-byte Unicode scalar value present only when `CPIRGLen` (byte 9) is X'FE' or X'FF'. When present it immediately follows the fixed 13-byte header and is returned as UBIN (4 bytes).",
+          "offset": {
+            "begin": 13,
+            "length": 4
+          },
+          "type": "UBIN",
+          "required": false,
+          "notes": "Only present when byte 9 is X'FE' or X'FF'. If present, this field contains a Unicode scalar mapped to the default character ID."
+        }
+      ]
+    },
+    {
+      "sfId": "CPD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk13975819",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "CPDesc",
+          "displayName": "CPDesc",
+          "description": "Code Page Description (payload offset 0-31)",
+          "offset": {
+            "begin": 0,
+            "length": 32
+          },
+          "type": "CHAR",
+          "required": true
+        },
+        {
+          "name": "GCGIDLen",
+          "displayName": "GCGIDLen",
+          "description": "Graphic Character GID Length (payload offset 32-33)",
+          "offset": {
+            "begin": 32,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "NumCdPts",
+          "displayName": "NumCdPts",
+          "description": "Number of Coded Graphic Characters Assigned (payload offset 34-37)",
+          "offset": {
+            "begin": 34,
+            "length": 4
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "GCSGID",
+          "displayName": "GCSGID",
+          "description": "Graphic Character Set GID (payload offset 38-39). Values: X'0000' (no GCSGID assigned), X'0001'-X'FFFE' (GCSGID), X'FFFF' (no GCSGID assigned)",
+          "offset": {
+            "begin": 38,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "CPGID",
+          "displayName": "CPGID",
+          "description": "Code Page Global Identifier (payload offset 40-41). Values: X'0000' (no CPGID assigned), X'0001'-X'FFFE' (CPGID), X'FFFF' (no CPGID assigned)",
+          "offset": {
+            "begin": 40,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "EncScheme",
+          "displayName": "EncScheme",
+          "description": "Encoding Scheme (payload offset 42-43). Optional field describing encoding scheme.",
+          "offset": {
+            "begin": 42,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "CPI",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk28DF42D9",
+        "repeatingGroup": true,
+        "notes": "Repeating group length is provided by CPIRGLen (byte 9) in the CPC structured field; parser should loop using that length. Each group entry layout: GCGID (0-7 CHAR), PrtFlags (8 BITS), CodePoint (9 — 1 or 2 bytes UBIN depending on CPIRGLen). When CPIRGLen indicates Unicode scalar mappings (X'FE' or X'FF'), one or more 4-byte Unicode scalar values follow the fixed header as indicated by the group's count parameter."
+      },
+      "layout": [
+        {
+          "name": "GCGID",
+          "displayName": "GCGID",
+          "description": "Graphic Character Global ID (group offset 0-7)",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": true
+        },
+        {
+          "name": "PrtFlags",
+          "displayName": "PrtFlags",
+          "description": "Graphic Character Use Flags (group offset 8)",
+          "offset": {
+            "begin": 8,
+            "length": 1
+          },
+          "type": "BITS",
+          "required": true
+        },
+        {
+          "name": "CodePoint",
+          "displayName": "CodePoint",
+          "description": "Code point for the character. Length is determined by CPIRGLen (found in CPC byte 9): single-byte (1) or double-byte (2).",
+          "offset": {
+            "begin": 9,
+            "length": 0
+          },
+          "type": "UBIN",
+          "required": true,
+          "notes": "Variable length: when CPIRGLen indicates single-byte code page use 1 byte, when double-byte use 2 bytes. Parser should consult CPIRGLen in CPC to determine length per group entry."
+        },
+        {
+          "name": "UnicodeMapping",
+          "displayName": "UnicodeMapping",
+          "description": "Optional Unicode scalar mappings for the group entry. When present, the mapping consists of a 1-byte count followed by that many 4-byte UBIN Unicode scalar values.",
+          "offset": {
+            "begin": 0,
+            "length": 0
+          },
+          "type": "UBIN",
+          "required": false,
+          "notes": "Present only when CPIRGLen is X'FE' or X'FF' (per CPC). Parser should read the count and then read that many 4-byte Unicode scalars. This field follows the fixed-length portion of the group entry (after CodePoint)."
+        }
+      ]
+    },
+    {
+      "sfId": "CTC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=CTCHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "ConData",
+          "displayName": "ConData",
+          "description": "Constant data",
+          "offset": {
+            "begin": 0,
+            "length": 10
+          },
+          "type": "CHAR",
+          "required": true
+        }
+      ]
+    
+    },
+    {
+      "sfId": "EAG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EAGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "GroupName",
+          "displayName": "GroupName",
+          "description": "Group name (payload offset 0, length 8)",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "EBC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EBCHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "BCdoName",
+          "displayName": "BCdoName",
+          "description": "Name of the bar code data object",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "ECF",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk803B5F5C",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "CFName",
+          "displayName": "CFName",
+          "description": "Coded Font Name",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "ECP",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk2F3990D3",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "CPName",
+          "displayName": "CPName",
+          "description": "Code Page Name",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "EDG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EDGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "DEGName",
+          "displayName": "Document Environment Name",
+          "description": "Name of Document Environment Group",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "EDI",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EDIHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "IndxName",
+          "displayName": "IndxName",
+          "description": "Name of document index",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "EDT",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EDTHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "DocName",
+          "displayName": "DocName",
+          "description": "Name of the document",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "EFG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EFGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "FEGName",
+          "displayName": "FEGName",
+          "description": "Name of Form Environment Group.",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "EFM",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EFMHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "FMName",
+          "displayName": "FMName",
+          "description": "Name of form map.",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "EFN",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk14A55F94",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "CSName",
+          "displayName": "CSName",
+          "description": "Font Character Set Name",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "EGR",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EGRHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "EII",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EIIHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "ImoName",
+          "displayName": "ImoName",
+          "description": "Name of the IM image data.",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "EIM",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EIMHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "IdoName",
+          "displayName": "IdoName",
+          "description": "Name of the image data object",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "EMM",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EMMHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "MMName",
+          "displayName": "MMName",
+          "description": "Name of the medium map",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "EMO",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EMOHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "OvlyName",
+          "displayName": "OvlyName",
+          "description": "Name of the overlay",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "ENG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=ENGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "PGrpName",
+          "displayName": "PGrpName",
+          "description": "Name of the page group",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+      
+    },
+    {
+      "sfId": "EOC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EOCHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "ObjCName",
+          "displayName": "ObjCName",
+          "description": "Name of the object container",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "EOG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EOGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "OEGName",
+          "displayName": "OEGName",
+          "description": "Name of the object environment group",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "EPF",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EPFHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "PFName",
+          "displayName": "PFName",
+          "description": "Name of the print file",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "EPG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EPGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "PageName",
+          "displayName": "PageName",
+          "description": "Name of the page",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "EPS",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EPSHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "PsegName",
+          "displayName": "PsegName",
+          "description": "Name of the page segment",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "EPT",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=EPTHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "PTdoName",
+          "displayName": "PTdoName",
+          "description": "Name of the presentation text data object",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "ERG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=HEAD223",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "RGrpName",
+          "displayName": "RGrpName",
+          "description": "Name of the resource group",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x02",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "ERS",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=ERSHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "RSName",
+          "displayName": "RSName",
+          "description": "Name of the resource",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "ESG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=ESGHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "REGName",
+          "displayName": "REGName",
+          "description": "Name of the resource environment group",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "FGD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=FGDHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "FNO",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk715E01DC",
+        "repeatingGroup": true,
+        "notes": "Repeating group length is provided by FNORGLen in the FNC structured field (offset 14 of FNC). Parser/UI should loop using that length (26 bytes expected). Reserved elements at offsets 0 and 16 are not displayed in the repeating-group table."
+      },
+      "layout": [
+        {
+          "name": "Reserved0",
+          "displayName": "Reserved",
+          "description": "Reserved for future use (do not display)",
+          "offset": {
+            "begin": 0,
+            "length": 2
+          },
+          "type": "UNDF",
+          "required": false,
+          "notes": "Reserved; not shown in the repeating-group table"
+        },
+        {
+          "name": "CharRot",
+          "displayName": "CharRot",
+          "description": "Character Rotation (0, 90, 180, 270 degrees)",
+          "offset": {
+            "begin": 2,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "MaxBaseOffset",
+          "displayName": "MaxBaseOffset",
+          "description": "Maximum Baseline Offset (fixed or relative)",
+          "offset": {
+            "begin": 4,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": true
+        },
+        {
+          "name": "MaxCharInc",
+          "displayName": "MaxCharInc",
+          "description": "Maximum Character Increment (fixed/relative)",
+          "offset": {
+            "begin": 6,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "SpCharInc",
+          "displayName": "SpCharInc",
+          "description": "Space Character Increment (fixed/relative)",
+          "offset": {
+            "begin": 8,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "MaxBaseExtent",
+          "displayName": "MaxBaseExtent",
+          "description": "Maximum Baseline Extent",
+          "offset": {
+            "begin": 10,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "OrntFlags",
+          "displayName": "OrntFlags",
+          "description": "Orientation and flag bits (Font Index selection, kerning, uniform A-space, uniform baseline offset, uniform char increment)",
+          "offset": {
+            "begin": 12,
+            "length": 1
+          },
+          "type": "BITS",
+          "required": true,
+          "notes": "Bits 0-2: Font Index selection; Bit3: reserved; Bit4: Kerning; Bit5: Uniform A-space; Bit6: Uniform Baseline Offset; Bit7: Uniform Character Increment"
+        },
+        {
+          "name": "Reserved13",
+          "displayName": "Reserved",
+          "description": "Reserved for future use",
+          "offset": {
+            "begin": 13,
+            "length": 1
+          },
+          "type": "UNDF",
+          "required": false
+        },
+        {
+          "name": "EmSpInc",
+          "displayName": "EmSpInc",
+          "description": "Em-Space Increment (pels or relative units)",
+          "offset": {
+            "begin": 14,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "Reserved16",
+          "displayName": "Reserved",
+          "description": "Reserved for future use (do not display)",
+          "offset": {
+            "begin": 16,
+            "length": 2
+          },
+          "type": "UNDF",
+          "required": false,
+          "notes": "Reserved; not shown in the repeating-group table"
+        },
+        {
+          "name": "FigSpInc",
+          "displayName": "FigSpInc",
+          "description": "Figure Space Increment",
+          "offset": {
+            "begin": 18,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "NomCharInc",
+          "displayName": "NomCharInc",
+          "description": "Nominal Character Increment",
+          "offset": {
+            "begin": 20,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "DefBInc",
+          "displayName": "DefBInc",
+          "description": "Default Baseline Increment",
+          "offset": {
+            "begin": 22,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "MinASpace",
+          "displayName": "MinASpace",
+          "description": "Minimum A-space (minimum/ uniform)",
+          "offset": {
+            "begin": 24,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "FNC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk12C18D34",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "Retired",
+          "displayName": "Retired",
+          "description": "Retired Parameter",
+          "offset": {
+            "begin": 0,
+            "length": 1
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "PatTech",
+          "displayName": "PatTech",
+          "description": "Pattern Technology Identifier",
+          "offset": {
+            "begin": 1,
+            "length": 1
+          },
+          "type": "CODE",
+          "enumMap": {
+            "05": "Laser Matrix N-bit Wide",
+            "1E": "Composite Adobe Type 0",
+            "1F": "Type 1 Font Printer File Binary (PFB)"
+          },
+          "required": true
+        },
+        {
+          "name": "Reserved",
+          "displayName": "Reserved",
+          "description": "Reserved for future use",
+          "offset": {
+            "begin": 2,
+            "length": 1
+          },
+          "type": "UNDF",
+          "required": true
+        },
+        {
+          "name": "FntFlags",
+          "displayName": "FntFlags",
+          "description": "Font Use Flags",
+          "offset": {
+            "begin": 3,
+            "length": 1
+          },
+          "type": "BITS",
+          "required": true,
+          "notes": "Bit0: 0=Normal printing, 1=MICR printing; Bit1: 0=Complete font, 1=Extension font; Bits2-3: reserved; Bit4: retired baseline shift indicator; Bit5: reserved; Bit6: 0=Variable raster pattern size, 1=Uniform raster pattern size; Bit7: reserved"
+        },
+        {
+          "name": "XUnitBase",
+          "displayName": "XUnitBase",
+          "description": "Fixed/relative metrics selector (10 inches base)",
+          "offset": {
+            "begin": 4,
+            "length": 1
+          },
+          "type": "CODE",
+          "enumMap": {
+            "00": "Base is fixed at 10 inches",
+            "02": "Base is relative"
+          },
+          "required": true
+        },
+        {
+          "name": "YUnitBase",
+          "displayName": "YUnitBase",
+          "description": "Fixed/relative metrics selector (10 inches base)",
+          "offset": {
+            "begin": 5,
+            "length": 1
+          },
+          "type": "CODE",
+          "enumMap": {
+            "00": "Base is fixed at 10 inches",
+            "02": "Base is relative"
+          },
+          "required": true
+        },
+        {
+          "name": "XftUnits",
+          "displayName": "XftUnits",
+          "description": "Horizontal units (font metrics)",
+          "offset": {
+            "begin": 6,
+            "length": 2
+          },
+          "type": "UBIN",
+          "enumMap": {
+            "0960": "240 pels per inch (fixed base)",
+            "0BB8": "300 pels per inch (fixed base)",
+            "03E8": "1000 units per em (relative base for PatTech 0x1E/0x1F)"
+          },
+          "required": true
+        },
+        {
+          "name": "YftUnits",
+          "displayName": "YftUnits",
+          "description": "Vertical units (font metrics)",
+          "offset": {
+            "begin": 8,
+            "length": 2
+          },
+          "type": "UBIN",
+          "enumMap": {
+            "0960": "240 pels per inch (fixed base)",
+            "0BB8": "300 pels per inch (fixed base)",
+            "03E8": "1000 units per em (relative base for PatTech 0x1E/0x1F)"
+          },
+          "required": true
+        },
+        {
+          "name": "MaxBoxWd",
+          "displayName": "MaxBoxWd",
+          "description": "Maximum Character Box Width",
+          "offset": {
+            "begin": 10,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "MaxBoxHt",
+          "displayName": "MaxBoxHt",
+          "description": "Maximum Character Box Height",
+          "offset": {
+            "begin": 12,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "FNORGLen",
+          "displayName": "FNORGLen",
+          "description": "FNO Repeating Group Length",
+          "offset": {
+            "begin": 14,
+            "length": 1
+          },
+          "type": "UBIN",
+          "enumMap": {
+            "1A": "Constant length for FNO repeating group"
+          },
+          "required": true
+        },
+        {
+          "name": "FNIRGLen",
+          "displayName": "FNIRGLen",
+          "description": "FNI Repeating Group Length",
+          "offset": {
+            "begin": 15,
+            "length": 1
+          },
+          "type": "CODE",
+          "enumMap": {
+            "1C": "Raster technology font or outline technology font (common length)",
+            "0A": "Outline technology font (alternative length)"
+          },
+          "required": true
+        },
+        {
+          "name": "PatAlign",
+          "displayName": "PatAlign",
+          "description": "Pattern Data Alignment Code",
+          "offset": {
+            "begin": 16,
+            "length": 1
+          },
+          "type": "CODE",
+          "enumMap": {
+            "00": "1-byte alignment",
+            "02": "4-byte alignment",
+            "03": "8-byte alignment"
+          },
+          "required": true
+        },
+        {
+          "name": "RPatDCnt",
+          "displayName": "RPatDCnt",
+          "description": "Raster Pattern Data Count",
+          "offset": {
+            "begin": 17,
+            "length": 3
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "FNPRGLen",
+          "displayName": "FNPRGLen",
+          "description": "FNP Repeating Group Length",
+          "offset": {
+            "begin": 20,
+            "length": 1
+          },
+          "type": "UBIN",
+          "enumMap": {
+            "16": "Constant length for FNP repeating group"
+          },
+          "required": true
+        },
+        {
+          "name": "FNMRGLen",
+          "displayName": "FNMRGLen",
+          "description": "FNM Repeating Group Length",
+          "offset": {
+            "begin": 21,
+            "length": 1
+          },
+          "type": "UBIN",
+          "enumMap": {
+            "00": "Outline font data present in FNGs",
+            "08": "Raster pattern data present in FNGs"
+          },
+          "required": true
+        },
+        {
+          "name": "ResXUBase",
+          "displayName": "ResXUBase",
+          "description": "Shape resolution X base (optional)",
+          "offset": {
+            "begin": 22,
+            "length": 1
+          },
+          "type": "CODE",
+          "enumMap": {
+            "00": "Base is fixed at 10 inches"
+          },
+          "required": false
+        },
+        {
+          "name": "ResYUBase",
+          "displayName": "ResYUBase",
+          "description": "Shape resolution Y base (optional)",
+          "offset": {
+            "begin": 23,
+            "length": 1
+          },
+          "type": "CODE",
+          "enumMap": {
+            "00": "Base is fixed at 10 inches"
+          },
+          "required": false
+        },
+        {
+          "name": "XfrUnits",
+          "displayName": "XfrUnits",
+          "description": "Horizontal units for outline pattern",
+          "offset": {
+            "begin": 24,
+            "length": 2
+          },
+          "type": "UBIN",
+          "enumMap": {
+            "0960": "240 pels per inch (fixed base)",
+            "0BB8": "300 pels per inch (fixed base)",
+            "0000": "No shape resolution provided"
+          },
+          "required": false
+        },
+        {
+          "name": "YfrUnits",
+          "displayName": "YfrUnits",
+          "description": "Vertical units for outline pattern",
+          "offset": {
+            "begin": 26,
+            "length": 2
+          },
+          "type": "UBIN",
+          "enumMap": {
+            "0960": "240 pels per inch (fixed base)",
+            "0BB8": "300 pels per inch (fixed base)",
+            "0000": "No shape resolution provided"
+          },
+          "required": false
+        },
+        {
+          "name": "OPatDCnt",
+          "displayName": "OPatDCnt",
+          "description": "Outline Pattern Data Count",
+          "offset": {
+            "begin": 28,
+            "length": 4
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "Reserved2",
+          "displayName": "Reserved2",
+          "description": "Reserved for future use",
+          "offset": {
+            "begin": 32,
+            "length": 3
+          },
+          "type": "UNDF",
+          "required": false
+        },
+        {
+          "name": "FNNRGLen",
+          "displayName": "FNNRGLen",
+          "description": "FNN Repeating Group Length",
+          "offset": {
+            "begin": 35,
+            "length": 1
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "FNNDCnt",
+          "displayName": "FNNDCnt",
+          "description": "FNN Data Count",
+          "offset": {
+            "begin": 36,
+            "length": 4
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "FNNMapCnt",
+          "displayName": "FNNMapCnt",
+          "description": "FNN Name Count",
+          "offset": {
+            "begin": 40,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "Self-defining triplets",
+          "type": "TRIPLETS",
+          "triplets": "0x6D",
+          "offset": {
+            "begin": 42,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "FND",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk6A1DA9B7",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "TypeFcDesc",
+          "displayName": "TypeFcDesc",
+          "description": "Typeface Description (payload offset 0-31)",
+          "offset": {
+            "begin": 0,
+            "length": 32
+          },
+          "type": "CHAR",
+          "required": true
+        },
+        {
+          "name": "FwtClass",
+          "displayName": "FwtClass",
+          "description": "Weight Class (payload offset 32)",
+          "offset": {
+            "begin": 32,
+            "length": 1
+          },
+          "type": "enum",
+          "enumMap": {
+            "01": "Ultralight",
+            "02": "Extralight",
+            "03": "Light",
+            "04": "Semilight",
+            "05": "Medium (normal)",
+            "06": "Semibold",
+            "07": "Bold",
+            "08": "Extrabold",
+            "09": "Ultrabold"
+          },
+          "required": true
+        },
+        {
+          "name": "FtwDClass",
+          "displayName": "FtwDClass",
+          "description": "Width Class (payload offset 33)",
+          "offset": {
+            "begin": 33,
+            "length": 1
+          },
+          "type": "enum",
+          "enumMap": {
+            "01": "Ultracondensed",
+            "02": "Extracondensed",
+            "03": "Condensed",
+            "04": "Semicondensed",
+            "05": "Medium (normal)",
+            "06": "Semiexpanded",
+            "07": "Expanded",
+            "08": "Extraexpanded",
+            "09": "Ultraexpanded"
+          },
+          "required": true
+        },
+        {
+          "name": "MaxPtSize",
+          "displayName": "MaxPtSize",
+          "description": "Maximum Vertical Size, in 10ths of a Point (payload offset 34-35)",
+          "offset": {
+            "begin": 34,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "NomPtSize",
+          "displayName": "NomPtSize",
+          "description": "Nominal Vertical Size, in 10ths of a Point (payload offset 36-37)",
+          "offset": {
+            "begin": 36,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "MinPtSize",
+          "displayName": "MinPtSize",
+          "description": "Minimum Vertical Size, in 10ths of a Point (payload offset 38-39)",
+          "offset": {
+            "begin": 38,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "MaxHSize",
+          "displayName": "MaxHSize",
+          "description": "Maximum Horizontal Size, in 20ths of a point (payload offset 40-41)",
+          "offset": {
+            "begin": 40,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "NomHSize",
+          "displayName": "NomHSize",
+          "description": "Nominal Horizontal Size, in 20ths of a point (payload offset 42-43)",
+          "offset": {
+            "begin": 42,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "MinHSize",
+          "displayName": "MinHSize",
+          "description": "Minimum Horizontal Size, in 20ths of a point (payload offset 44-45)",
+          "offset": {
+            "begin": 44,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "DsnGenCls",
+          "displayName": "DsnGenCls",
+          "description": "Design General Class (ISO) (payload offset 46)",
+          "offset": {
+            "begin": 46,
+            "length": 1
+          },
+          "type": "CODE",
+          "required": true
+        },
+        {
+          "name": "DsnSubCls",
+          "displayName": "DsnSubCls",
+          "description": "Design Subclass (ISO) (payload offset 47)",
+          "offset": {
+            "begin": 47,
+            "length": 1
+          },
+          "type": "CODE",
+          "required": true
+        },
+        {
+          "name": "DsnSpecGrp",
+          "displayName": "DsnSpecGrp",
+          "description": "Design Specific Group (ISO) (payload offset 48)",
+          "offset": {
+            "begin": 48,
+            "length": 1
+          },
+          "type": "CODE",
+          "required": true
+        },
+        {
+          "name": "Reserved",
+          "displayName": "Reserved",
+          "description": "Reserved for future use (payload offset 49-63)",
+          "offset": {
+            "begin": 49,
+            "length": 15
+          },
+          "type": "UBIN",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "FNG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk385DBB58",
+        "repeatingGroup": false
+      }
+      ,
+      "layout": [
+        {
+          "name": "PatData",
+          "displayName": "PatData",
+          "description": "Up to 32,759 bytes of pattern data",
+          "offset": { "begin": 0, "length": -1 },
+          "type": "UNDF",
+          "required": true,
+          "valueMode": "length"
+        }
+      ]
+    },
+    {
+      "sfId": "FNI",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk069DCCF9",
+        "repeatingGroup": true,
+        "notes": "Repeating group length is provided by FNIRGLen in FNC; parser should loop using that length."
+      },
+      "layout": [
+        {
+          "name": "GCGID",
+          "displayName": "GCGID",
+          "description": "Graphic Character Global Identifier",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": true
+        },
+        {
+          "name": "CharInc",
+          "displayName": "CharInc",
+          "description": "Character Increment (fixed or relative)",
+          "offset": {
+            "begin": 8,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "AscendHt",
+          "displayName": "AscendHt",
+          "description": "Ascender Height (fixed/relative)",
+          "offset": {
+            "begin": 10,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": false
+        },
+        {
+          "name": "DescendDp",
+          "displayName": "DescendDp",
+          "description": "Descender Depth (fixed/relative)",
+          "offset": {
+            "begin": 12,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": false
+        },
+        {
+          "name": "Reserved",
+          "displayName": "Reserved",
+          "description": "Reserved (must be X'0000')",
+          "offset": {
+            "begin": 14,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "FNMCnt",
+          "displayName": "FNMCnt",
+          "description": "FNM Index",
+          "offset": {
+            "begin": 16,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "ASpace",
+          "displayName": "ASpace",
+          "description": "A-Space (fixed/relative)",
+          "offset": {
+            "begin": 18,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": false
+        },
+        {
+          "name": "BSpace",
+          "displayName": "BSpace",
+          "description": "B-Space (fixed/relative)",
+          "offset": {
+            "begin": 20,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "CSpace",
+          "displayName": "CSpace",
+          "description": "C-Space (fixed/relative)",
+          "offset": {
+            "begin": 22,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": false
+        },
+        {
+          "name": "Reserved2",
+          "displayName": "Reserved2",
+          "description": "Reserved (must be X'0000')",
+          "offset": {
+            "begin": 24,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "BaseOset",
+          "displayName": "BaseOset",
+          "description": "Baseline Offset (fixed/relative)",
+          "offset": {
+            "begin": 26,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "FNM",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk04B9FA99",
+        "repeatingGroup": true,
+        "notes": "Repeating group length supplied by FNMRGLen (byte 21) in FNC; parser should loop using that length."
+      },
+      "layout": [
+        {
+          "name": "CharBoxWd",
+          "displayName": "CharBoxWd",
+          "description": "Character Box Width (fixed/relative)",
+          "offset": {
+            "begin": 0,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "CharBoxHt",
+          "displayName": "CharBoxHt",
+          "description": "Character Box Height (fixed/relative)",
+          "offset": {
+            "begin": 2,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "PatDOffset",
+          "displayName": "PatDOffset",
+          "description": "Pattern Data Offset",
+          "offset": {
+            "begin": 4,
+            "length": 4
+          },
+          "type": "UBIN",
+          "required": true
+        }
+      ]
+    },
+    {
+      "sfId": "FNN",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk1A01E559",
+        "repeatingGroup": false
+      }
+      ,
+      "layout": [
+        {
+          "name": "IBMFormat",
+          "displayName": "IBM Format",
+          "description": "IBM character identifier type (byte 0)",
+          "offset": { "begin": 0, "length": 1 },
+          "type": "CODE",
+          "required": true
+        },
+        {
+          "name": "TechnologyFormat",
+          "displayName": "Technology Format",
+          "description": "Technology-specific character identifier type (byte 1)",
+          "offset": { "begin": 1, "length": 1 },
+          "type": "CODE",
+          "required": true
+        }
+        ,
+        {
+          "name": "FNNMapSection",
+          "displayName": "FNN Map Section",
+          "description": "Repeating group: each entry contains an 8-byte GCGID and a 4-byte technology-specific ID offset.",
+          "offset": { "begin": 2, "length": 0 },
+          "type": "REPEATING_GROUP",
+          "required": false
+        },
+        {
+          "name": "TSIDList",
+          "displayName": "TSID List",
+          "description": "Variable-length Technology-Specific Identifiers. Each member begins with a length byte that includes the length byte.",
+          "offset": { "begin": 0, "length": -1 },
+          "type": "UNDF",
+          "valueMode": "length",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "FNP",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/foca-reference-06.pdf#nameddest=idxmk:mk3F9E137D",
+        "repeatingGroup": true,
+        "notes": "Repeating group length is provided by FNPRGLen in the FNC structured field (offset 20 of FNC). Parser/UI should loop using that length (22 bytes expected). Reserved elements at offsets 0,10-14,16 are not displayed in the repeating-group table."
+      },
+      "layout": [
+        {
+          "name": "Reserved0",
+          "displayName": "Reserved",
+          "description": "Reserved for future use (do not display)",
+          "offset": {
+            "begin": 0,
+            "length": 2
+          },
+          "type": "UNDF",
+          "required": false,
+          "notes": "Reserved; not shown in the repeating-group table"
+        },
+        {
+          "name": "LcHeight",
+          "displayName": "LcHeight",
+          "description": "Lowercase Height (fixed/relative)",
+          "offset": {
+            "begin": 2,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": true
+        },
+        {
+          "name": "CapMHt",
+          "displayName": "CapMHt",
+          "description": "Cap-M Height (fixed/relative)",
+          "offset": {
+            "begin": 4,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": true
+        },
+        {
+          "name": "MaxAscHt",
+          "displayName": "MaxAscHt",
+          "description": "Maximum Ascender Height",
+          "offset": {
+            "begin": 6,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": true
+        },
+        {
+          "name": "MaxDesDp",
+          "displayName": "MaxDesDp",
+          "description": "Maximum Descender Depth",
+          "offset": {
+            "begin": 8,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": true
+        },
+        {
+          "name": "Reserved10_14",
+          "displayName": "Reserved",
+          "description": "Reserved for future use (do not display)",
+          "offset": {
+            "begin": 10,
+            "length": 5
+          },
+          "type": "UNDF",
+          "required": false,
+          "notes": "Reserved; not shown in the repeating-group table"
+        },
+        {
+          "name": "Retired15",
+          "displayName": "Retired",
+          "description": "Retired Parameter",
+          "offset": {
+            "begin": 15,
+            "length": 1
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "Reserved16",
+          "displayName": "Reserved",
+          "description": "Reserved for future use (do not display)",
+          "offset": {
+            "begin": 16,
+            "length": 1
+          },
+          "type": "UNDF",
+          "required": false,
+          "notes": "Reserved; not shown in the repeating-group table"
+        },
+        {
+          "name": "UscoreWd",
+          "displayName": "UscoreWd",
+          "description": "Underscore Width (units)",
+          "offset": {
+            "begin": 17,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "UscoreWdf",
+          "displayName": "UscoreWdf",
+          "description": "Underscore Width (fraction)",
+          "offset": {
+            "begin": 19,
+            "length": 1
+          },
+          "type": "UBIN",
+          "required": false
+        },
+        {
+          "name": "UscorePos",
+          "displayName": "UscorePos",
+          "description": "Underscore Position (fixed/relative)",
+          "offset": {
+            "begin": 20,
+            "length": 2
+          },
+          "type": "SBIN",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "GAD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=GADHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "GDD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=GDDHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "ICP",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=ICPHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "IDD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=IDDHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "IEL",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=IELHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x2D,0x56, 0x57, 0x58, 0x59, 0x5A, 0x5E, 0x81, 0x83",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "IID",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=IIDHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "IMM",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=IMMHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "MMPName",
+          "displayName": "MMPName",
+          "description": "Name of the medium map to be invoked",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01",
+          "offset": {
+            "begin": 8,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "IOB",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=IOBHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "ObjName",
+          "displayName": "Object Name",
+          "description": "Name of the object",
+          "type": "CHAR",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "required": true
+        },
+        {
+          "name": "Reserved",
+          "displayName": "Reserved",
+          "description": "Reserved; should be zero",
+          "type": "BIN",
+          "offset": {
+            "begin": 8,
+            "length": 1
+          },
+          "required": true
+        },
+        {
+          "name": "ObjType",
+          "displayName": "Object Type",
+          "description": "Object type",
+          "type": "CODE",
+          "offset": {
+            "begin": 9,
+            "length": 1
+          },
+          "required": true,
+          "enumMap": {
+            "5F": "Page Segment",
+            "92": "Other object data",
+            "9B": "Presentation Text (PTOCA) with OEG",
+            "BB": "Graphics (GOCA)",
+            "EB": "Bar Code (BCOCA)",
+            "FB": "Image (IOCA)"
+          }
+        },
+        {
+          "name": "XoaOset",
+          "displayName": "X-axis object area origin",
+          "description": "X-axis origin of the object area",
+          "type": "SBIN",
+          "offset": {
+            "begin": 10,
+            "length": 3
+          },
+          "required": true
+        },
+        {
+          "name": "YoaOset",
+          "displayName": "Y-axis object area origin",
+          "description": "Y-axis origin of the object area",
+          "type": "SBIN",
+          "offset": {
+            "begin": 13,
+            "length": 3
+          },
+          "required": true
+        },
+        {
+          "name": "XoaOrent",
+          "displayName": "X-axis orientation",
+          "description": "The object area's X-axis rotation",
+          "type": "CODE",
+          "offset": {
+            "begin": 16,
+            "length": 2
+          },
+          "required": true,
+          "enumMap": {
+            "0000": "0 degrees",
+            "2D00": "90 degrees",
+            "5A00": "180 degrees",
+            "8700": "270 degrees",
+            "FFFF": "Defined in the object"
+          }
+        },
+        {
+          "name": "YoaOrent",
+          "displayName": "Y-axis orientation",
+          "description": "The object area's Y-axis rotation",
+          "type": "CODE",
+          "offset": {
+            "begin": 18,
+            "length": 2
+          },
+          "required": true,
+          "enumMap": {
+            "0000": "0 degrees",
+            "2D00": "90 degrees",
+            "5A00": "180 degrees",
+            "8700": "270 degrees",
+            "FFFF": "Defined in the object"
+          }
+        },
+        {
+          "name": "XocaOset",
+          "displayName": "X-axis content origin",
+          "description": "X-axis origin for object content",
+          "type": "SBIN",
+          "offset": {
+            "begin": 20,
+            "length": 3
+          },
+          "required": true
+        },
+        {
+          "name": "YocaOset",
+          "displayName": "Y-axis content origin",
+          "description": "Y-axis origin for object content",
+          "type": "SBIN",
+          "offset": {
+            "begin": 23,
+            "length": 3
+          },
+          "required": true
+        },
+        {
+          "name": "RefCSys",
+          "displayName": "Reference coordinate system",
+          "description": "Reference coordinate system",
+          "type": "CODE",
+          "offset": {
+            "begin": 26,
+            "length": 1
+          },
+          "required": true,
+          "enumMap": {
+            "01": "Page or overlay coordinate system"
+          }
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x04, 0x10, 0x36, 0x4B, 0x4C, 0x4E, 0x5A, 0x70",
+          "offset": {
+            "begin": 27,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "IOC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=IOCHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "IPD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=IPDHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "IPG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=IPGHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "IPO",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=IPOHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "OvlyName",
+          "displayName": "Overlay Name",
+          "description": "Name of the overlay resource",
+          "type": "CHAR",
+          "offset": {
+            "begin": 0,
+            "length": 8
+          },
+          "required": true
+        },
+        {
+          "name": "XolOset",
+          "displayName": "X-axis origin for the page overlay",
+          "description": "X-axis origin for the page overlay",
+          "type": "SBIN",
+          "offset": {
+            "begin": 8,
+            "length": 3
+          },
+          "required": true
+        },
+        {
+          "name": "YolOset",
+          "displayName": "Y-axis origin for the page overlay",
+          "description": "Y-axis origin for the page overlay",
+          "type": "SBIN",
+          "offset": {
+            "begin": 11,
+            "length": 3
+          },
+          "required": true
+        },
+        {
+          "name": "OvlyOrent",
+          "displayName": "Overlay X-axis rotation",
+          "description": "The overlay's X-axis rotation from the X axis of the including page coordinate system.",
+          "type": "CODE",
+          "offset": {
+            "begin": 14,
+            "length": 2
+          },
+          "required": false,
+          "enumMap": {
+            "0000": "0 degrees",
+            "2D00": "90 degrees",
+            "5A00": "180 degrees",
+            "8700": "270 degrees"
+          }
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "See IPO Semantics for triplet applicability.",
+          "type": "TRIPLETS",
+          "offset": {
+            "begin": 16,
+            "length": -1
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "IPS",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=IPSHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "IRD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=IRDHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "LLE",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=LLEHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "MBC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MBCHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x04",
+          "offset": {
+            "begin": 0,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "MCC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MCCHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "MCD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MCDHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x04",
+          "offset": {
+            "begin": 0,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "MCF",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MCFHEAD",
+        "repeatingGroup": true
+      },
+      "layout": [
+        {
+          "name": "PMCid",
+          "displayName": "RGLength",
+          "description": "Total length of this repeating group",
+          "offset": {
+            "begin": 0,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x1F, 0x20, 0x24, 0x25, 0x26, 0x50, 0x5D, 0x84",
+          "offset": {
+            "begin": 2,
+            "length": 0
+          },
+          "required": true
+        }
+      ]
+
+    },
+    {
+      "sfId": "MCF-1",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MCF1HEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "MDR",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MDRHEAD",
+        "repeatingGroup": true
+      },
+      "layout": [
+        {
+          "name": "PMCid",
+          "displayName": "RGLength",
+          "description": "Total length of this repeating group",
+          "offset": {
+            "begin": 0,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x10, 0x20, 0x50, 0x5A, 0x8B, 0x8C, 0x91, 0xFF",
+          "offset": {
+            "begin": 2,
+            "length": 0
+          },
+          "required": true
+        }
+      ]
+    },
+    {
+      "sfId": "MFC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MFCHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "MGO",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MGOHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x04",
+          "offset": {
+            "begin": 0,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "MIO",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MIOHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x04",
+          "offset": {
+            "begin": 0,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "MMC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MMCHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "MMD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MMDHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "MMO",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MMOHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "MMT",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MMTHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "MPG",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MPGHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "MPO",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MPOHEAD",
+        "repeatingGroup": true
+      },
+      "layout": [
+        {
+          "name": "RGLength",
+          "displayName": "Repeating Group Length",
+          "description": "Total length of this repeating group",
+          "type": "UBIN",
+          "offset": {
+            "begin": 0,
+            "length": 2
+          },
+          "required": true
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "See MPO Semantics for triplet applicability.",
+          "type": "TRIPLETS",
+          "offset": {
+            "begin": 2,
+            "length": -1
+          },
+          "required": true
+        }
+      ]
+    },
+    {
+      "sfId": "MPS",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MPSHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "MPT",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MPTHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x04",
+          "offset": {
+            "begin": 0,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "MSU",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=MSUHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "NOP",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=NOPHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "UndfData",
+          "displayName": "UndfData",
+          "description": "Up to 32,759 bytes of data with no architectural definition",
+          "offset": {
+            "begin": 0,
+            "length": 32759
+          },
+          "type": "CHAR",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "OBD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=OBDHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x43, 0x4B, 0x4C, 0x4E, 0x70",
+          "offset": {
+            "begin": 0,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "OBP",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=OBPHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "OCD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=OCDHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "PEC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=PECHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "Reserved",
+          "displayName": "Reserved",
+          "description": "Reserved",
+          "offset": {
+            "begin": 0,
+            "length": 2
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x5A, 0x95, 0x97, 0x9E",
+          "offset": {
+            "begin": 2,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+
+    },
+    {
+      "sfId": "PFC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=PFCHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "PGD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=PGDHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "XpgBase",
+          "displayName": "XpgBase",
+          "description": "Page unit base for the X axis.",
+          "offset": {
+            "begin": 0,
+            "length": 1
+          },
+          "type": "CODE",
+          "enumMap": {
+             "00": "10 inches",
+             "01": "10 centimeters"
+          },
+          "required": true
+        },
+        {
+          "name": "YpgBase",
+          "displayName": "YpgBase",
+          "description": "Page unit base for the Y axis.",
+          "offset": {
+            "begin": 1,
+            "length": 1
+          },
+          "type": "CODE",
+          "enumMap": {
+             "00": "10 inches",
+             "01": "10 centimeters"
+          },
+          "required": true
+        },
+        {
+          "name": "XpgUnits",
+          "displayName": "XpgUnits",
+          "description": "Page units per unit base for the X axis",
+          "offset": {
+            "begin": 2,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "YpgUnits",
+          "displayName": "YpgUnits",
+          "description": "Page units per unit base for the Y axis",
+          "offset": {
+            "begin": 4,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "XpgSize",
+          "displayName": "XpgSize",
+          "description": "Page extent for the X axis",
+          "offset": {
+            "begin": 6,
+            "length": 3
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "YpgSize",
+          "displayName": "YpgSize",
+          "description": "Page extent for the Y axis",
+          "offset": {
+            "begin": 9,
+            "length": 3
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "Reserved",
+          "displayName": "Reserved",
+          "description": "Reserved; should be binary zero",
+          "offset": {
+            "begin": 12,
+            "length": 3
+          },
+          "type": "CHAR",
+          "required": true
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "See PGD Semantics for triplet applicability",
+          "offset": {
+            "begin": 15,
+            "length": 0
+          },
+          "type": "TRIPLETS",
+          "triplets": "0x4E, 0x70, 0x71",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "PGP",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=PGPHEAD",
+        "repeatingGroup": true,
+        "notes": "Repeating group contains page position data for each page on the sheet. Each group entry includes XmOset, YmOset, PGorient, SHside, PgFlgs, and PMCid."
+      },
+      "description": "Page Position (PGP) structured field. Specifies the position and orientation of each page on a sheet, including sheet side, partition, and modification controls.",
+      "layout": [
+        {
+          "name": "Constant",
+          "displayName": "Constant",
+          "description": "Reserved constant; must be X'01'",
+          "offset": { "begin": 0, "length": 1 },
+          "type": "CODE",
+          "required": true
+        },
+        {
+          "name": "RepeatingGroup",
+          "displayName": "Repeating Group",
+          "description": "One or more repeating groups, each describing a page position on the sheet.",
+          "type": "REPEATING_GROUP",
+          "required": true,
+          "groupLayout": [
+            {
+              "name": "RGLength",
+              "displayName": "RGLength",
+              "description": "Length of each repeating group",
+              "offset": { "begin": 0, "length": 1 },
+              "type": "UBIN",
+              "required": true
+            },
+            {
+              "name": "XmOset",
+              "displayName": "XmOset",
+              "description": "X coordinate of page presentation space origin (-32,768 to 32,767)",
+              "offset": { "begin": 1, "length": 3 },
+              "type": "SBIN",
+              "required": true
+            },
+            {
+              "name": "YmOset",
+              "displayName": "YmOset",
+              "description": "Y coordinate of page presentation space origin (-32,768 to 32,767)",
+              "offset": { "begin": 4, "length": 3 },
+              "type": "SBIN",
+              "required": true
+            },
+            {
+              "name": "PGorient",
+              "displayName": "PGorient",
+              "description": "Page presentation space X-axis rotation from medium presentation space (0°, 90°, 180°, 270°)",
+              "offset": { "begin": 7, "length": 2 },
+              "type": "CODE",
+              "enumMap": {
+                "0000": "0° rotation",
+                "2D00": "90° rotation",
+                "5A00": "180° rotation",
+                "8700": "270° rotation"
+              },
+              "required": true
+            },
+            {
+              "name": "SHside",
+              "displayName": "SHside",
+              "description": "Sheet side and partition selection",
+              "offset": { "begin": 9, "length": 1 },
+              "type": "CODE",
+              "enumMap": {
+                "00": "Front side (default)",
+                "01": "Back side (default)",
+                "10": "Partition 1, front side",
+                "11": "Partition 1, back side",
+                "20": "Partition 2, front side",
+                "21": "Partition 2, back side",
+                "30": "Partition 3, front side",
+                "31": "Partition 3, back side",
+                "40": "Partition 4, front side",
+                "41": "Partition 4, back side"
+              },
+              "required": true
+            },
+            {
+              "name": "PgFlgs",
+              "displayName": "PgFlgs",
+              "description": "Additional presentation controls for the partition (bit flags)",
+              "offset": { "begin": 10, "length": 1 },
+              "type": "BITS",
+              "required": false,
+              "notes": "See PGP Semantics for PgFlgs bit definitions."
+            },
+            {
+              "name": "PMCid",
+              "displayName": "PMCid",
+              "description": "Page Modification Control identifier (0–127, X'FF' = apply all modifications)",
+              "offset": { "begin": 11, "length": 1 },
+              "type": "CODE",
+              "required": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sfId": "PMC",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=PMCHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "PMCid",
+          "displayName": "PMCid",
+          "description": "Page Modification Control identifier",
+          "offset": {
+            "begin": 0,
+            "length": 1
+          },
+          "type": "CHAR",
+          "required": false
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x4B",
+          "offset": {
+            "begin": 2,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "PPO",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=PPOHEAD",
+        "repeatingGroup": true
+      },
+      "layout": [
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x04, 0x5A",
+          "offset": {
+            "begin": 0,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "PTD",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=PTDHEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "PTD-1",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=PTD1HEAD",
+        "repeatingGroup": false
+      }
+    },
+    {
+      "sfId": "PTX",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=PTXHEAD",
+        "shortCode": "PTX",
+        "name": "Presentation Text (PTX)",
+        "notes": "PTX payload contains PTOCA control sequences starting at payload offset 2. See AMB (0xD3), AMI (0xC7), TRN (0xDB).",
+        "repeatingGroup": false
+      },
+      "description": "PTX — Presentation Text structured field. Layout is PTOCA (control sequences).",
+      "layout": [
+        {
+          "name": "PTOCA stream",
+          "displayName": "PTOCA",
+          "type": "PTOCA",
+          "description": "Presentation Text Object Content Architecture control sequences starting at payload offset 2. Variable length; contains control sequence blocks encoded as [length][code][data].",
+          "offset": {
+            "begin": 2,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "TLE",
+      "definition": {
+        "AFPCCManual": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/modca-reference-10.pdf#nameddest=TLEHEAD",
+        "repeatingGroup": false
+      },
+      "layout": [
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x01, 0x02, 0x36, 0x80",
+          "offset": {
+            "begin": 0,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "sfId": "MDD",
+      "definition": {
+        "sfHex": "0xD3A8C8",
+        "shortCode": "MDD",
+        "name": "Medium Descriptor (MDD)",
+        "repeatingGroup": false
+      },
+      "description": "Medium descriptor specifying medium base, units, size and control flags.",
+      "layout": [
+        {
+          "name": "XmBase",
+          "displayName": "XmBase",
+          "description": "Medium unit base for the X axis. X'00' = 10 inches; X'01' = 10 centimeters.",
+          "offset": {
+            "begin": 0,
+            "length": 1
+          },
+          "type": "CODE",
+          "required": true
+        },
+        {
+          "name": "YmBase",
+          "displayName": "YmBase",
+          "description": "Medium unit base for the Y axis. X'00' = 10 inches; X'01' = 10 centimeters.",
+          "offset": {
+            "begin": 1,
+            "length": 1
+          },
+          "type": "CODE",
+          "required": true
+        },
+        {
+          "name": "XmUnits",
+          "displayName": "XmUnits",
+          "description": "Medium units per unit base for the X axis (1..32767).",
+          "offset": {
+            "begin": 2,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "YmUnits",
+          "displayName": "YmUnits",
+          "description": "Medium units per unit base for the Y axis (1..32767).",
+          "offset": {
+            "begin": 4,
+            "length": 2
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "XmSize",
+          "displayName": "XmSize",
+          "description": "Medium extent for the X axis. X'000000' = extent not specified; X'FFFFFF' = presentation process default.",
+          "offset": {
+            "begin": 6,
+            "length": 3
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "YmSize",
+          "displayName": "YmSize",
+          "description": "Medium extent for the Y axis. X'000000' = extent not specified; X'FFFFFF' = presentation process default.",
+          "offset": {
+            "begin": 9,
+            "length": 3
+          },
+          "type": "UBIN",
+          "required": true
+        },
+        {
+          "name": "MDDFlags",
+          "displayName": "MDDFlags",
+          "description": "Specify control information for the media. See MDD semantics for bit definitions.",
+          "offset": {
+            "begin": 12,
+            "length": 1
+          },
+          "type": "BITS",
+          "required": true
+        },
+        {
+          "name": "Triplets",
+          "displayName": "Triplets",
+          "description": "self-identifying parameter that contains three components: the length of the triplet, an ID identifying the triplet, and the associated parameters.",
+          "type": "TRIPLETS",
+          "triplets": "0x68",
+          "offset": {
+            "begin": 0,
+            "length": 0
+          },
+          "required": false
+        }
+      ]
+    }
+  ]
+}

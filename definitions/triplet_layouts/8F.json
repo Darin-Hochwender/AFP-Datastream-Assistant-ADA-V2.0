@@ -1,0 +1,24 @@
+{
+  "tripletId": "8F",
+  "title": "MO:DCA Function Set (0x8F)",
+  "description": "MO:DCA Function Set triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "UBIN",
+      "length": 2,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 4,
+      "type": "CODE",
+      "length": 2,
+      "name": "FctSetID",
+      "description": "Specifies the MO:DCA Function Set ID",
+      "enumMap": {
+        "0001": "MO:DCA GA"
+      }
+    }
+  ]
+}

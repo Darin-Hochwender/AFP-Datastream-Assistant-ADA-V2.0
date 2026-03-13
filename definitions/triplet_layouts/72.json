@@ -1,0 +1,25 @@
+{
+  "tripletId": "72",
+  "title": "Universal Date and Time Stamp (0x72)",
+  "description": "Universal Date and Time Stamp; do not include triplet length or TID.",
+  "elements": [
+    { "offset": 2, "type": "UBIN", "length": 1, "name": "Reserved", "description": "Reserved; should be zero." },
+    { "offset": 3, "type": "UBIN", "length": 2, "name": "YearAD", "description": "Year AD using Gregorian calendar" },
+    { "offset": 5, "type": "UBIN", "length": 1, "name": "Month", "description": "Month of the year (1-12)" },
+    { "offset": 6, "type": "UBIN", "length": 1, "name": "Day", "description": "Day of the month (1-31)" },
+    { "offset": 7, "type": "UBIN", "length": 1, "name": "Hour", "description": "Hour of the day (0-23)" },
+    { "offset": 8, "type": "UBIN", "length": 1, "name": "Minute", "description": "Minute of the hour (0-59)" },
+    { "offset": 9, "type": "UBIN", "length": 1, "name": "Second", "description": "Second of the minute (0-59)" },
+    {
+      "offset": 10,
+      "type": "CODE",
+      "length": 1,
+      "name": "TimeZone",
+      "description": "Relationship of time to UTC",
+      "enumMap": { "00": "UTC", "01": "Ahead of UTC", "02": "Behind UTC" }
+    },
+    { "offset": 11, "type": "UBIN", "length": 1, "name": "UTCDiffH", "description": "Hours offset from UTC (0-23)" },
+    { "offset": 12, "type": "UBIN", "length": 1, "name": "UTCDiffM", "description": "Minutes offset from UTC (0-59)" },
+    { "offset": 13, "type": "bytes", "length": "variable", "name": "DatExt", "description": "Additional data bytes if present" }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "tripletId": "45",
+  "title": "Media Eject Control Triplet (0x45)",
+  "description": "Media Eject Control triplet. Triplet length includes the length and TID bytes; payload starts at offset 2. Offset 2 is reserved and should be zero.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "Reserved",
+      "type": "UBIN",
+      "description": "Reserved byte; should be zero. Present for alignment and future use."
+    },
+    {
+      "offset": 3,
+      "length": 1,
+      "name": "EjCtrl",
+      "type": "CODE",
+      "description": "Media eject control code.",
+      "enumMap": {
+        "01": "Eject to new sheet",
+        "02": "Conditional eject to next partition",
+        "03": "Conditional eject to next front-side partition",
+        "04": "Conditional eject to next back-side partition"
+      }
+    }
+  ],
+  "notes": "TID for this triplet is X'45'. Length is typically 4 (length + TID + Reserved + EjCtrl)."
+}

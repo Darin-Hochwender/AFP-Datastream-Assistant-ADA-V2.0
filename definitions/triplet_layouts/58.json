@@ -1,0 +1,24 @@
+{
+  "tripletId": "58",
+  "title": "Object Structured Field Offset (0x58)",
+  "description": "Layout for triplet 0x58: structured-field offset triplet. Tlength and Tid (offsets 0 and 1) are omitted from this mapping.",
+  "notes": "Offsets are relative to the triplet start. Tlength and Tid are not represented here.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 4,
+      "name": "SFOff",
+      "type": "UBIN",
+      "description": "Structured field offset (UBIN, 4 bytes). Specifies the offset of the referenced structured field within the document.",
+      "required": true
+    },
+    {
+      "offset": 6,
+      "length": 4,
+      "name": "SFOffHi",
+      "type": "UBIN",
+      "description": "High-order bytes of the structured field offset (UBIN, 4 bytes). Optional; present when the triplet length is 10.",
+      "required": false
+    }
+  ]
+}

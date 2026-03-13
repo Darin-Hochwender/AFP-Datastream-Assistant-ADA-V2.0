@@ -1,0 +1,77 @@
+{
+  "tripletId": "95",
+  "title": "Rendering Intent (0x95)",
+  "description": "Rendering intent triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "UBIN",
+      "length": 2,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 4,
+      "type": "CODE",
+      "length": 1,
+      "name": "IOCARI",
+      "description": "Rendering intent for IOCA objects",
+      "enumMap": {
+        "00": "perceptual",
+        "01": "media-relative colorimetric",
+        "02": "saturation",
+        "03": "ICC-absolute colorimetric",
+        "FF": "not specified"
+      }
+    },
+    {
+      "offset": 5,
+      "type": "CODE",
+      "length": 1,
+      "name": "OCRI",
+      "description": "Rendering intent for container (non-OCA) objects",
+      "enumMap": {
+        "00": "perceptual",
+        "01": "media-relative colorimetric",
+        "02": "saturation",
+        "03": "ICC-absolute colorimetric",
+        "FF": "not specified"
+      }
+    },
+    {
+      "offset": 6,
+      "type": "CODE",
+      "length": 1,
+      "name": "PTOCARI",
+      "description": "Rendering intent for PTOCA texts",
+      "enumMap": {
+        "00": "perceptual",
+        "01": "media-relative colorimetric",
+        "02": "saturation",
+        "03": "ICC-absolute colorimetric",
+        "FF": "not specified"
+      }
+    },
+    {
+      "offset": 7,
+      "type": "CODE",
+      "length": 1,
+      "name": "GOCARI",
+      "description": "Rendering intent for AFP GOCA objects",
+      "enumMap": {
+        "00": "perceptual",
+        "01": "media-relative colorimetric",
+        "02": "saturation",
+        "03": "ICC-absolute colorimetric",
+        "FF": "not specified"
+      }
+    },
+    {
+      "offset": 8,
+      "type": "UBIN",
+      "length": 2,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    }
+  ]
+}

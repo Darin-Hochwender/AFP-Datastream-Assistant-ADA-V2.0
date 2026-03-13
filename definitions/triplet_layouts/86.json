@@ -1,0 +1,43 @@
+{
+  "tripletId": "86",
+  "title": "Text Fidelity (0x86)",
+  "description": "Text fidelity triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "CODE",
+      "length": 1,
+      "name": "StpTxtEx",
+      "description": "Text exception continuation rule",
+      "enumMap": {
+        "01": "Stop presentation at point of first text exception and report exception",
+        "02": "Do not stop presentation because of text exceptions"
+      }
+    },
+    {
+      "offset": 3,
+      "type": "UBIN",
+      "length": 1,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 4,
+      "type": "CODE",
+      "length": 1,
+      "name": "RepTxtEx",
+      "description": "Text exception reporting rule if exception does not stop presentation",
+      "enumMap": {
+        "01": "Report text exception",
+        "02": "Do not report text exception"
+      }
+    },
+    {
+      "offset": 5,
+      "type": "UBIN",
+      "length": 2,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    }
+  ]
+}

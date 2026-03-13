@@ -1,0 +1,43 @@
+{
+  "tripletId": "4D",
+  "title": "Area Definition (0x4D)",
+  "description": "Area Definition triplet layout. Length and TID are not mapped here; payload starts at offset 2.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "Reserved",
+      "type": "UBIN",
+      "description": "Reserved byte; should be zero. Present for alignment and future use."
+    },
+    {
+      "offset": 3,
+      "length": 3,
+      "name": "XarOset",
+      "type": "SBIN",
+      "description": "X-axis origin of the area (signed binary, 3 bytes, big-endian). Range 0–32767 per spec; negative values typically not used."
+    },
+    {
+      "offset": 6,
+      "length": 3,
+      "name": "YarOset",
+      "type": "SBIN",
+      "description": "Y-axis origin of the area (signed binary, 3 bytes, big-endian). Range 0–32767 per spec; negative values typically not used."
+    },
+    {
+      "offset": 9,
+      "length": 3,
+      "name": "XarSize",
+      "type": "UBIN",
+      "description": "Area extent for the X axis (unsigned binary, 3 bytes, big-endian)."
+    },
+    {
+      "offset": 12,
+      "length": 3,
+      "name": "YarSize",
+      "type": "UBIN",
+      "description": "Area extent for the Y axis (unsigned binary, 3 bytes, big-endian)."
+    }
+  ],
+  "notes": "TID for this triplet is X'4D'. Length field (offset 0) and TID (offset 1) are intentionally not mapped per instructions."
+}

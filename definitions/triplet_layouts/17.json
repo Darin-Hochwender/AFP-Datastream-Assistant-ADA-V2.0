@@ -1,0 +1,8 @@
+{
+  "tripletId": "17",
+  "title": "(0x17)",
+  "description": "Generic shell layout: capture entire triplet payload as an EBCDIC string and display as ASCII.",
+  "elements": [
+    { "offset": 2, "name": "17Wip", "type": "char", "encoding": "EBCDIC", "length": "variable", "description": "Capture entire triplet payload starting at offset 2 and display as converted ASCII" }
+  ]
+}

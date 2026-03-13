@@ -1,0 +1,56 @@
+{
+  "tripletId": "85",
+  "title": "Finishing Operation (0x85)",
+  "description": "Finishing operation triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "CODE",
+      "length": 1,
+      "name": "FOpType",
+      "description": "Finishing operation type"
+    },
+    {
+      "offset": 3,
+      "type": "CODE",
+      "length": 1,
+      "name": "FOpOpt",
+      "description": "Finishing operation option"
+    },
+    {
+      "offset": 4,
+      "type": "UBIN",
+      "length": 1,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 5,
+      "type": "CODE",
+      "length": 1,
+      "name": "RefEdge",
+      "description": "Finishing operation reference corner or edge"
+    },
+    {
+      "offset": 6,
+      "type": "UBIN",
+      "length": 1,
+      "name": "FOpCnt",
+      "description": "Finishing operation count"
+    },
+    {
+      "offset": 7,
+      "type": "UBIN",
+      "length": 2,
+      "name": "AxOffset",
+      "description": "Finishing operation axis offset (0..32767)"
+    },
+    {
+      "offset": 9,
+      "type": "UBIN",
+      "length": 2,
+      "name": "OpPos",
+      "description": "Operation position on finishing operation axis in millimeters (0..32767)"
+    }
+  ]
+}

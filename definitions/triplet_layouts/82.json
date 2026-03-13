@@ -1,0 +1,37 @@
+{
+  "tripletId": "82",
+  "title": "Parameter Value (0x82)",
+  "description": "Parameter value triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "UBIN",
+      "length": 1,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 3,
+      "type": "CODE",
+      "length": 1,
+      "name": "ParmSyn",
+      "description": "Parameter syntax",
+      "enumMap": {
+        "00": "Undefined",
+        "01": "Unsigned binary number",
+        "02": "Signed binary number",
+        "03": "Bit string",
+        "04": "Defined constant",
+        "05": "Character string",
+        "06": "Name"
+      }
+    },
+    {
+      "offset": 4,
+      "type": "bytes",
+      "length": "variable",
+      "name": "ParmVal",
+      "description": "Parameter value passed (interpretation depends on `ParmSyn`)"
+    }
+  ]
+}

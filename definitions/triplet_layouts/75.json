@@ -1,0 +1,60 @@
+{
+  "tripletId": "75",
+  "title": "Color Fidelity (0x75)",
+  "description": "Color fidelity triplet layout. (Do not include triplet length or TID here.)",
+  "elements": [
+    {
+      "offset": 2,
+      "type": "CODE",
+      "length": 1,
+      "name": "StpCoEx",
+      "description": "Color exception continuation rule",
+      "enumMap": {
+        "01": "Stop presentation at point of first color exception and report exception",
+        "02": "Do not stop presentation because of color exceptions"
+      }
+    },
+    {
+      "offset": 3,
+      "type": "UBIN",
+      "length": 1,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 4,
+      "type": "CODE",
+      "length": 1,
+      "name": "RepCoEx",
+      "description": "Color exception reporting rule if exception does not stop presentation",
+      "enumMap": {
+        "01": "Report color exception",
+        "02": "Do not report color exception"
+      }
+    },
+    {
+      "offset": 5,
+      "type": "UBIN",
+      "length": 1,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    },
+    {
+      "offset": 6,
+      "type": "CODE",
+      "length": 1,
+      "name": "ColSub",
+      "description": "Substitution rule if exception does not stop presentation",
+      "enumMap": {
+        "01": "For color-value exceptions, any color substitution is permitted; for CMR exceptions, use presentation system defaults"
+      }
+    },
+    {
+      "offset": 7,
+      "type": "UBIN",
+      "length": 1,
+      "name": "Reserved",
+      "description": "Reserved; should be zero"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "tripletId": "10",
+  "title": "Object Container Triplet (0x10)",
+  "description": "Triplet 0x10 layout describing object class, structure flags, required object ID and optional fields.",
+  "elements": [
+    {
+      "offset": 3,
+      "length": 1,
+      "name": "ObjClass",
+      "type": "enum",
+      "description": "Specifies the object class.",
+      "enumMap": {
+        "01": "Time-invariant paginated presentation object",
+        "10": "Time-variant presentation object",
+        "20": "Executable program (non-presentation object)",
+        "30": "Set-up file (nonpresentation object); document level",
+        "40": "Secondary Resource",
+        "41": "Data-object font",
+        "50": "Metadata Object (nonpresentation object)"
+      }
+    },
+    {
+      "offset": 6,
+      "length": 2,
+      "name": "StrucFlgs",
+      "type": "bits",
+      "description": "Flags that characterize the structure of the object data. Bits are numbered 0 (LSB) to 15 (MSB).",
+      "bits": [
+        {
+          "positions": "0-1",
+          "name": "ObjectContainer",
+          "description": "Object Container (BOC/EOC): 00 Reserved; 01 object data not in MO:DCA container; 10 unknown; 11 object data in MO:DCA container"
+        },
+        {
+          "positions": "2-3",
+          "name": "OEG",
+          "description": "Object environment group (OEG): 00 Reserved; 01 no OEG; 10 unknown; 11 OEG included"
+        },
+        {
+          "positions": "4-5",
+          "name": "OCD",
+          "description": "Object Container Data (OCD) fields: 00 Reserved; 01 not carried in OCD; 10 unknown; 11 carried in OCD structured fields"
+        },
+        {
+          "positions": "6-15",
+          "name": "Reserved",
+          "description": "Reserved; all bits must be 0"
+        }
+      ]
+    },
+    {
+      "offset": 8,
+      "length": 16,
+      "name": "ReqObjId",
+      "type": "code",
+      "description": "Required Object ID (MO:DCA reference)"
+    },
+    {
+      "offset": 24,
+      "length": 32,
+      "name": "ObjTpName",
+      "type": "char",
+      "description": "Optional: Object Level"
+    },
+    {
+      "offset": 56,
+      "length": 8,
+      "name": "ObjLev",
+      "type": "char",
+      "description": "Optional: Object Level"
+    },
+
+    {
+      "offset": 64,
+      "length": 32,
+      "name": "CompName",
+      "type": "char",
+      "description": "Optional: Component Name"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "tripletId": "24",
+  "title": "Resource Local Identifier (0x24)",
+  "description": "Layout for triplet 0x24: ResType and ResLID fields as defined in the MO:DCA table.",
+  "notes": "Offsets are relative to triplet start. Length and Tid are handled separately by the loader.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 1,
+      "name": "ResType",
+      "type": "enum",
+      "enumMap": {
+        "00": "Usage-dependent",
+        "02": "Page Overlay",
+        "05": "Coded Font"
+      },
+      "description": "Specifies the resource type (CODE, 1 byte)."
+    },
+    {
+      "offset": 3,
+      "length": 1,
+      "name": "ResLID",
+      "type": "hex",
+      "description": "Resource local ID (1 byte). Range X'00' - X'FE'."
+    }
+  ]
+}

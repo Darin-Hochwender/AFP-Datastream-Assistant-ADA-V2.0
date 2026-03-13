@@ -1,0 +1,16 @@
+{
+  "tripletId": "65",
+  "title": "Comment (0x65)",
+  "description": "Comment triplet layout. Length and TID are not mapped here; payload starts at offset 2.",
+  "elements": [
+    {
+      "offset": 2,
+      "name": "Comment",
+      "type": "CHAR",
+      "encoding": "EBCDIC",
+      "length": "variable",
+      "description": "Text of the comment (EBCDIC)."
+    }
+  ],
+  "notes": "TID for this triplet is X'65'. Length field (offset 0) and TID (offset 1) are intentionally not mapped."
+}

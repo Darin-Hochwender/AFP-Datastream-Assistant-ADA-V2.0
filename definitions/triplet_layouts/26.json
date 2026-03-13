@@ -1,0 +1,21 @@
+{
+  "tripletId": "26",
+  "title": "Character Rotation (0x26)",
+  "description": "Layout for triplet 0x26: two-byte clockwise character rotation code.",
+  "notes": "Offsets are relative to triplet start. Rotation is encoded as a 2-byte CODE value.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 2,
+      "name": "CharRot",
+      "type": "enum",
+      "enumMap": {
+        "0000": "0 degrees",
+        "2D00": "90 degrees",
+        "5A00": "180 degrees",
+        "8700": "270 degrees"
+      },
+      "description": "Clockwise character rotation (2 bytes)."
+    }
+  ]
+}

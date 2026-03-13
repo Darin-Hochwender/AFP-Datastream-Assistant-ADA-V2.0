@@ -1,0 +1,22 @@
+{
+  "tripletId": "01",
+  "title": "Coded Graphic Character Set Global Identifier (0x01)",
+  "description": "Layout for triplet 0x01: GCSGID and CPGID fields as defined in the MO:DCA table.",
+  "notes": "Offsets in this layout are relative to the triplet start. Tlength (offset 0) and Tid (offset 1) are not mapped here.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 2,
+      "name": "GCSGID",
+      "type": "hex",
+      "description": "Graphic Character Set Global Identifier (CODE, 2 bytes). Specifies the Graphic Character Set Global Identifier. Value X'FFFF' indicates the code page form."
+    },
+    {
+      "offset": 4,
+      "length": 2,
+      "name": "CPGID",
+      "type": "hex",
+      "description": "Code Page Global Identifier (CODE, 2 bytes). Specifies the Code Page Global Identifier for the character set."
+    }
+  ]
+}

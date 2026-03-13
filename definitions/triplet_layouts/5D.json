@@ -1,0 +1,16 @@
+{
+  "tripletId": "5D",
+  "title": "Font Horizontal Scale Factor (0x5D)",
+  "description": "Layout for triplet 0x5D: horizontal scale factor for fonts. Tlength and Tid (offsets 0 and 1) are omitted from this mapping.",
+  "notes": "Offsets are relative to the triplet start. Tlength and Tid are not represented here.",
+  "elements": [
+    {
+      "offset": 2,
+      "length": 2,
+      "name": "Hscale",
+      "type": "UBIN",
+      "description": "Horizontal scale factor in 1/1440ths of an inch (UBIN, 2 bytes). Valid range 1–32767.",
+      "required": true
+    }
+  ]
+}
