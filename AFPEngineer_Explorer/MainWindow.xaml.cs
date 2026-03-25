@@ -15,6 +15,7 @@ using Microsoft.Win32;
 using AFPEngineer_Explorer.Services;
 using OpenAI.Chat;
 using System.ClientModel;
+using System.Text.Json;
 
 namespace AFPEngineer_Explorer
 {
@@ -70,16 +71,49 @@ namespace AFPEngineer_Explorer
         protected void OnPropertyChanged(string prop) => PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(prop));
     }
 
+    public class ChatMessageModel : System.ComponentModel.INotifyPropertyChanged
+    {
+        private string _text;
+        public string Text
+        {
+            get => _text;
+            set { _text = value; OnPropertyChanged(nameof(Text)); }
+        }
+
+        public System.Windows.Media.Brush BackgroundBrush { get; set; }
+        public System.Windows.Media.Brush ForegroundBrush { get; set; }
+        public HorizontalAlignment Alignment { get; set; }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string prop) => PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(prop));
+    }
+
     public partial class MainWindow : Window
     {
         // EBCDIC (Code Page 37) is the standard for most AFP files
         private static Encoding ebcdic;
         
+        private ObservableCollection<ChatMessageModel> _chatHistoryUI = new ObservableCollection<ChatMessageModel>();
+        private List<ChatMessage> _llmChatHistory = new List<ChatMessage>();
+        
         public MainWindow()
         {
             // Add this line to unlock EBCDIC support
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            ebcdic = Encoding.GetEncoding("IBM037");
+            SettingsService.Load();
+            try 
+            {
+                string cp = SettingsService.CurrentSettings.DefaultCodePage ?? "IBM037";
+                if (int.TryParse(cp, out int cpInt))
+                    ebcdic = Encoding.GetEncoding(cpInt);
+                else
+                    ebcdic = Encoding.GetEncoding(cp);
+            }
+            catch 
+            {
+                ebcdic = Encoding.GetEncoding("IBM037");
+            }
+
             try
             {
                 string definitionsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "definitions", "structured_fields.json");
@@ -91,6 +125,21 @@ namespace AFPEngineer_Explorer
             }
 
             InitializeComponent();
+            
+            var chatList = this.FindName("ChatHistoryList") as ItemsControl;
+            if (chatList != null)
+            {
+                chatList.ItemsSource = _chatHistoryUI;
+            }
+            
+            _llmChatHistory.Add(new SystemChatMessage("You are ADA (AFP Datastream Assistant), a specialized IBM AFP (Advanced Function Presentation) Datastream expert. You help users learn about the datastream, MO:DCA structures, and PTOCA/IOCA. Be concise but highly knowledgeable. Answer questions directly using markdown where helpful, but do not use code blocks unless demonstrating hex or structured fields."));
+            _chatHistoryUI.Add(new ChatMessageModel { 
+                Text = "Hello! I am ADA, your AFP Datastream Assistant. Ask me any questions about the datastream, structured fields, or triplets!", 
+                BackgroundBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0F8FF")), 
+                ForegroundBrush = System.Windows.Media.Brushes.Black, 
+                Alignment = HorizontalAlignment.Left 
+            });
+
             // Bypass the generator: Find the tree manually and hook up the event
             var tree = this.FindName("AfpTreeView") as TreeView;
             if (tree != null)
@@ -109,6 +158,31 @@ namespace AFPEngineer_Explorer
             }
         }
 
+        private void ShowSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new SettingsWindow();
+            if (win.ShowDialog() == true)
+            {
+                // Re-render if there's a document loaded
+                if (!string.IsNullOrEmpty(_currentFilePath))
+                {
+                    try 
+                    {
+                        string cp = SettingsService.CurrentSettings.DefaultCodePage ?? "IBM037";
+                        if (int.TryParse(cp, out int cpInt))
+                            ebcdic = Encoding.GetEncoding(cpInt);
+                        else
+                            ebcdic = Encoding.GetEncoding(cp);
+                    }
+                    catch 
+                    {
+                        ebcdic = Encoding.GetEncoding("IBM037");
+                    }
+                    UpdateDocumentDisplay();
+                }
+            }
+        }
+
         private void SearchPrevBtn_Click(object sender, RoutedEventArgs e)
         {
             SearchAction(-1);
@@ -118,6 +192,125 @@ namespace AFPEngineer_Explorer
         {
             int direction = (System.Windows.Input.Keyboard.Modifiers & System.Windows.Input.ModifierKeys.Shift) == System.Windows.Input.ModifierKeys.Shift ? -1 : 1;
             SearchAction(direction);
+        }
+
+        private async void AiSearchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SearchBox.Text))
+            {
+                MessageBox.Show("Please enter a natural language search query. Example: 'Find the triplet that defines color management'");
+                return;
+            }
+
+            string githubToken = GetGithubToken();
+            if (string.IsNullOrEmpty(githubToken))
+            {
+                MessageBox.Show("No GitHub token found. Please set your token to use AI Search.");
+                return;
+            }
+
+            string term = SearchBox.Text;
+            var aiSearchBtn = this.FindName("AiSearchBtn") as Button;
+            if (aiSearchBtn != null) { aiSearchBtn.IsEnabled = false; aiSearchBtn.Content = "Wait..."; }
+
+            try
+            {
+                string sfJsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "definitions", "structured_fields.json");
+                string tripJsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "definitions", "triplets.json");
+                string ptxJsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "definitions", "ptx_control_sequences.json");
+
+                string sfStr = "";
+                if (File.Exists(sfJsonPath))
+                {
+                    try {
+                        using (var doc = JsonDocument.Parse(File.ReadAllText(sfJsonPath))) {
+                            if (doc.RootElement.TryGetProperty("sfDefinitions", out var defs)) {
+                                foreach (var el in defs.EnumerateArray()) {
+                                    string id = el.TryGetProperty("sfId", out var prop) ? prop.GetString() : "";
+                                    string desc = el.TryGetProperty("description", out var prop2) ? prop2.GetString() : "";
+                                    if (!string.IsNullOrEmpty(id)) sfStr += $"{id}: {desc}\n";
+                                }
+                            }
+                        }
+                    } catch {}
+                }
+
+                string tripStr = "";
+                if (File.Exists(tripJsonPath))
+                {
+                    try {
+                        using (var doc = JsonDocument.Parse(File.ReadAllText(tripJsonPath))) {
+                            foreach (var el in doc.RootElement.EnumerateArray()) {
+                                string id = el.TryGetProperty("id", out var prop) ? prop.GetString() : "";
+                                string name = el.TryGetProperty("name", out var prop3) ? prop3.GetString() : "";
+                                if (!string.IsNullOrEmpty(id)) tripStr += $"Hex {id}: {name}\n";
+                            }
+                        }
+                    } catch {}
+                }
+
+                string ptxStr = "";
+                if (File.Exists(ptxJsonPath))
+                {
+                    try {
+                        using (var doc = JsonDocument.Parse(File.ReadAllText(ptxJsonPath))) {
+                            if (doc.RootElement.TryGetProperty("controlSequences", out var seqs)) {
+                                foreach (var el in seqs.EnumerateArray()) {
+                                    string abbrev = el.TryGetProperty("shortId", out var prop) ? prop.GetString() : "";
+                                    string name = el.TryGetProperty("name", out var prop2) ? prop2.GetString() : "";
+                                    if (!string.IsNullOrEmpty(abbrev)) ptxStr += $"{abbrev}: {name}\n";
+                                }
+                            }
+                        }
+                    } catch {}
+                }
+
+                var client = new OpenAI.OpenAIClient(new ApiKeyCredential(githubToken), new OpenAI.OpenAIClientOptions { Endpoint = new Uri("https://models.inference.ai.azure.com") });
+                var chatClient = client.GetChatClient("gpt-4o-mini");
+
+                string systemPrompt = $@"You are a Natural Language to AFP element mapper.
+Your available schema definitions:
+<StructuredFields>{sfStr}</StructuredFields>
+<Triplets>{tripStr}</Triplets>
+<PTX>{ptxStr}</PTX>
+
+When the user gives a natural language query, find the BEST matching single element.
+Respond with a concise, helpful explanation of what the element is.
+Then, if the finding maps to a specific Structured Field (e.g. page descriptor, presentation text, etc), you MUST include on a new line: `[SEARCH:ACRONYM]` (e.g. `[SEARCH:PGD]`).
+If it maps to a triplet or PTX, mention it in the textual explanation, but ALSO try to provide the most likely structured field they exist in (like `[SEARCH:PTX]` for presentation text control sequences).";
+
+                var response = await chatClient.CompleteChatAsync(new ChatMessage[]
+                {
+                    new SystemChatMessage(systemPrompt),
+                    new UserChatMessage(term)
+                });
+
+                string answer = response.Value.Content[0].Text;
+
+                string extractedSearch = null;
+                var match = Regex.Match(answer, @"\[SEARCH:([A-Z0-9]{3})\]");
+                if (match.Success)
+                {
+                    extractedSearch = match.Groups[1].Value;
+                    answer = answer.Replace(match.Value, "").Trim();
+                }
+
+                MessageBox.Show(answer, "AI Search Result", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                if (!string.IsNullOrEmpty(extractedSearch))
+                {
+                    SearchBox.Text = extractedSearch;
+                    SearchAction(1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error running AI Search: {ex.Message}");
+            }
+            finally
+            {
+                if (aiSearchBtn != null) { aiSearchBtn.IsEnabled = true; aiSearchBtn.Content = "✨ AI Find"; }
+            }
         }
 
         private int _lastSearchIndex = -1;
@@ -559,6 +752,7 @@ namespace AFPEngineer_Explorer
             var hexdumpTxt = this.FindName("HexdumpTxt") as TextBox;
             var viewImageBtn = this.FindName("ViewImageBtn") as Button;
             var askAiBtn = this.FindName("AskAIBtn") as Button;
+            var askAiGroupBtn = this.FindName("AskAIGroupBtn") as Button;
             var aiResponseTxt = this.FindName("AiResponseTxt") as TextBox;
             var tree = sender as TreeView;
             var exploreTab = this.FindName("ExploreTab") as TabItem;
@@ -577,6 +771,21 @@ namespace AFPEngineer_Explorer
                     askAiBtn.Visibility = Visibility.Visible;
                     askAiBtn.Tag = selected;
                 }
+                
+                if (askAiGroupBtn != null)
+                {
+                    if (selected.Children != null && selected.Children.Count > 0)
+                    {
+                        askAiGroupBtn.Visibility = Visibility.Visible;
+                        askAiGroupBtn.Tag = selected;
+                    }
+                    else
+                    {
+                        askAiGroupBtn.Visibility = Visibility.Collapsed;
+                        askAiGroupBtn.Tag = null;
+                    }
+                }
+                
                 if (aiResponseTxt != null) 
                     aiResponseTxt.Visibility = Visibility.Collapsed;
 
@@ -605,9 +814,11 @@ namespace AFPEngineer_Explorer
                         }
                     }
 
+                    bool showPdfButton = false;
                     if (bocNode != null)
                     {
                         showButton = IsImageContainer(bocNode);
+                        showPdfButton = IsPdfContainer(bocNode);
                     }
 
                     if (showButton)
@@ -620,8 +831,23 @@ namespace AFPEngineer_Explorer
                         viewImageBtn.Visibility = Visibility.Collapsed;
                         viewImageBtn.Tag = null;
                     }
+
+                    var viewPdfBtn = this.FindName("ViewPdfBtn") as Button;
+                    if (viewPdfBtn != null)
+                    {
+                        if (showPdfButton)
+                        {
+                            viewPdfBtn.Visibility = Visibility.Visible;
+                            viewPdfBtn.Tag = selected;
+                        }
+                        else
+                        {
+                            viewPdfBtn.Visibility = Visibility.Collapsed;
+                            viewPdfBtn.Tag = null;
+                        }
+                    }
                 }
-                
+
                 if (exploreDocLinkBlock != null && exploreLink != null)
                 {
                     if (!string.IsNullOrEmpty(selected.Url))
@@ -745,7 +971,7 @@ namespace AFPEngineer_Explorer
                         {
                             byte[] oidBytes = new byte[16];
                             int tripletRemaining = bocPayload.Length - i;
-                            int extractLen = Math.Min(16, tripletRemaining);
+                            int extractLen = Math.Min(9, tripletRemaining); // Standard OID prefix is 9 bytes
                             Array.Copy(bocPayload, i, oidBytes, 0, extractLen);
                             string oidStr = BitConverter.ToString(oidBytes).Replace("-", "");
 
@@ -877,9 +1103,9 @@ namespace AFPEngineer_Explorer
                                 // Some OIDs might be shorter than 16 bytes depending on the triplet length, we pad with 0s per rules
                                 int tripletRemaining = bocPayload.Length - i;
                                 // We know it's inside a triplet, but scanning raw is easiest
-                                // Just grab up to 16 bytes. MO:DCA OIDs have a specific length often given, but user dictionary assumes padded 16 byte strings.
-                                // We'll just grab the length mentioned in dictionary or pad it manually based on what's available
-                                int extractLen = Math.Min(16, tripletRemaining);
+                                // Just grab up to 9 bytes. MO:DCA OIDs have a specific length often given, but user dictionary assumes padded 16 byte strings.
+                                // We'll just grab the 9 byte prefix and let the 16 byte array 00-pad the remaining bytes.
+                                int extractLen = Math.Min(9, tripletRemaining);
                                 Array.Copy(bocPayload, i, oidBytes, 0, extractLen);
                                 string oidStr = BitConverter.ToString(oidBytes).Replace("-", "");
 
@@ -1107,6 +1333,122 @@ namespace AFPEngineer_Explorer
             }
         }
 
+        private bool IsPdfContainer(AfpNode bocNode)
+        {
+            if (bocNode == null || bocNode.Name != "BOC" || string.IsNullOrEmpty(_currentFilePath))
+                return false;
+
+            try
+            {
+                string detectedType = "Unknown Object";
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(_currentFilePath)))
+                {
+                    reader.BaseStream.Seek(bocNode.Offset + 9, SeekOrigin.Begin);
+                    byte[] bocPayload = reader.ReadBytes(bocNode.Length);
+
+                    for (int i = 0; i <= bocPayload.Length - 4; i++)
+                    {
+                        // Look for OID prefix
+                        if (bocPayload[i] == 0x06 && bocPayload[i+1] == 0x07 && bocPayload[i+2] == 0x2B && bocPayload[i+3] == 0x12)
+                        {
+                            byte[] oidBytes = new byte[16];
+                            int tripletRemaining = bocPayload.Length - i;
+                            int extractLen = Math.Min(9, tripletRemaining);
+                            Array.Copy(bocPayload, i, oidBytes, 0, extractLen);
+                            string oidStr = BitConverter.ToString(oidBytes).Replace("-", "");
+
+                            var objectTypes = new Dictionary<string, string>
+                            {
+                                ["06072B12000401011900000000000000"] = "PDF Single-page Object",
+                                ["06072B12000401011A00000000000000"] = "PDF Resource Object",
+                                ["06072B12000401013100000000000000"] = "PDF with Transparency",
+                                ["06072B12000401013F00000000000000"] = "PDF Multiple Page File",
+                                ["06072B12000401014000000000000000"] = "PDF Multiple Page - with Transparency - File"
+                            };
+
+                            if (objectTypes.TryGetValue(oidStr, out string typeName))
+                            {
+                                detectedType = typeName;
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                return detectedType.Contains("PDF");
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private async void ViewPdf_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            if (btn?.Tag is AfpNode selectedNode && !string.IsNullOrEmpty(_currentFilePath))
+            {
+                AfpNode bocNode = null;
+
+                if (selectedNode.Name == "BOC") bocNode = selectedNode;
+                else if (selectedNode.Name == "OCD") bocNode = selectedNode.Parent;
+                else if (selectedNode.Name == "EOC")
+                {
+                    if (selectedNode.Parent != null)
+                    {
+                        for (int i = selectedNode.Parent.Children.IndexOf(selectedNode) - 1; i >= 0; i--)
+                        {
+                            if (selectedNode.Parent.Children[i].Name == "BOC")
+                            {
+                                bocNode = selectedNode.Parent.Children[i];
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (bocNode == null || bocNode.Name != "BOC") return;
+
+                try
+                {
+                    var ms = new MemoryStream();
+                    using (BinaryReader reader = new BinaryReader(File.OpenRead(_currentFilePath)))
+                    {
+                        foreach (var child in bocNode.Children)
+                        {
+                            if (child.Name == "OCD")
+                            {
+                                reader.BaseStream.Seek(child.Offset + 9, SeekOrigin.Begin);
+                                byte[] ocdData = reader.ReadBytes(child.Length);
+                                ms.Write(ocdData, 0, ocdData.Length);
+                            }
+                        }
+                    }
+
+                    ms.Position = 0;
+                    if (ms.Length > 0)
+                    {
+                        string tempPdfPath = Path.Combine(Path.GetTempPath(), $"extracted_{Guid.NewGuid()}.pdf");
+                        await File.WriteAllBytesAsync(tempPdfPath, ms.ToArray());
+
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                        {
+                            FileName = tempPdfPath,
+                            UseShellExecute = true
+                        });
+                    }
+                    else
+                    {
+                        MessageBox.Show("No Object Container Data (OCD) fields found to extract PDF.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error extracting or opening PDF: {ex.Message}");
+                }
+            }
+        }
+
         private void ExplorePrevBtn_Click(object sender, RoutedEventArgs e)
         {
             var tree = this.FindName("AfpTreeView") as TreeView;
@@ -1119,6 +1461,207 @@ namespace AFPEngineer_Explorer
                     prevNode.IsSelected = true;
                     BringNodeIntoView(prevNode, tree);
                 }
+            }
+        }
+
+        private async void ExtractTleReport_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(_currentFilePath) || _flatNodeList == null || _flatNodeList.Count == 0)
+            {
+                MessageBox.Show("Please open an AFP file first.");
+                return;
+            }
+
+            string downloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+            string fileName = $"TLE_Report_{Path.GetFileNameWithoutExtension(_currentFilePath)}_{DateTime.Now:yyyyMMddHHmmss}.csv";
+            string outputPath = Path.Combine(downloadFolder, fileName);
+
+            var progressWindow = new Window()
+            {
+                Title = "Extracting TLEs",
+                Width = 350,
+                Height = 120,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = this,
+                Content = new TextBlock() { Text = "Extracting TLEs to CSV, please wait...", Margin = new Thickness(20), FontSize = 14, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center }
+            };
+            progressWindow.Show();
+
+            try
+            {
+                await Task.Run(() => GenerateTleCsv(outputPath));
+                MessageBox.Show($"TLE Report successfully saved to:\n{outputPath}", "Extraction Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error extracting TLEs: {ex.Message}", "Extraction Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                progressWindow.Close();
+            }
+        }
+
+        private void GenerateTleCsv(string outputPath)
+        {
+            string[] targetFields = new[] {
+                "AccountId", "AddressLine1", "AddressLine2", "AddressLine3", "AddressLine4",
+                "AddressLine5", "AddressLine6", "CommId", "DocumentDescription", "DocumentSubType",
+                "IDCardCount", "Insert1", "Insert2", "Insert3", "Insert4", "Insert5", "Insert6",
+                "Insert7", "Insert8", "Insert9", "Insert10", "International", "LetterDate",
+                "OME", "RecipientId", "ReconId", "ZipCd"
+            };
+
+            var sb = new StringBuilder();
+            sb.AppendLine(string.Join(",", targetFields));
+
+            using (BinaryReader reader = new BinaryReader(File.OpenRead(_currentFilePath)))
+            {
+                Dictionary<string, string> currentGroupValues = null;
+                bool inGroup = false;
+
+                foreach (var node in _flatNodeList)
+                {
+                    if (node.Name == "BNG")
+                    {
+                        if (inGroup && currentGroupValues != null && currentGroupValues.Count > 0)
+                        {
+                            var row = targetFields.Select(f => currentGroupValues.ContainsKey(f) ? $"\"{currentGroupValues[f].Replace("\"", "\"\"")}\"" : "");
+                            sb.AppendLine(string.Join(",", row));
+                        }
+
+                        currentGroupValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                        inGroup = true;
+                    }
+                    else if (inGroup && node.Name == "TLE")
+                    {
+                        reader.BaseStream.Seek(node.Offset + 9, SeekOrigin.Begin);
+                        byte[] tlePayload = reader.ReadBytes(node.Length);
+                        string attrName = "";
+                        string attrValue = "";
+                        
+                        int idx = 0;
+                        while (idx < tlePayload.Length)
+                        {
+                            int tLen = tlePayload[idx];
+                            if (tLen < 2 || idx + tLen > tlePayload.Length) break;
+                            byte tId = tlePayload[idx + 1];
+                            
+                            if (tId == 0x02 && tLen >= 4) // Fully Qualified Name
+                            {
+                                attrName = ebcdic.GetString(tlePayload, idx + 4, tLen - 4).Trim();
+                            }
+                            else if (tId == 0x36 && tLen >= 4) // Attribute Value
+                            {
+                                attrValue = ebcdic.GetString(tlePayload, idx + 3, tLen - 3).Trim();
+                            }
+                            idx += tLen;
+                        }
+                        
+                        if (!string.IsNullOrEmpty(attrName))
+                        {
+                            currentGroupValues[attrName] = attrValue;
+                        }
+                    }
+                    else if (inGroup && node.Name == "ENG")
+                    {
+                        if (currentGroupValues != null && currentGroupValues.Count > 0)
+                        {
+                            var row = targetFields.Select(f => currentGroupValues.ContainsKey(f) ? $"\"{currentGroupValues[f].Replace("\"", "\"\"")}\"" : "");
+                            sb.AppendLine(string.Join(",", row));
+                        }
+                        currentGroupValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                        inGroup = false;
+                    }
+                }
+                
+                if (inGroup && currentGroupValues != null && currentGroupValues.Count > 0)
+                {
+                    var row = targetFields.Select(f => currentGroupValues.ContainsKey(f) ? $"\"{currentGroupValues[f].Replace("\"", "\"\"")}\"" : "");
+                    sb.AppendLine(string.Join(",", row));
+                }
+            }
+
+            File.WriteAllText(outputPath, sb.ToString());
+        }
+
+        private void ViewHelpTopics_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string helpFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "definitions", "help_topics.json");
+                if (!File.Exists(helpFilePath))
+                {
+                    MessageBox.Show("Help file could not be found at:\n" + helpFilePath, "File Missing", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var helpContent = File.ReadAllText(helpFilePath);
+                var topics = System.Text.Json.JsonSerializer.Deserialize<List<HelpTopic>>(helpContent);
+
+                if (topics == null || topics.Count == 0)
+                {
+                    MessageBox.Show("No help topics found in the file.", "Help Empty", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                Window helpWindow = new Window
+                {
+                    Title = "ADA Help & Documentation",
+                    Width = 900,
+                    Height = 650,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    Owner = this,
+                    Background = new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#F0F0F0"))
+                };
+
+                Grid grid = new Grid { Margin = new Thickness(10) };
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(280) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+                ListBox listBox = new ListBox
+                {
+                    ItemsSource = topics,
+                    DisplayMemberPath = "Title",
+                    BorderThickness = new Thickness(1),
+                    Background = System.Windows.Media.Brushes.White,
+                    FontSize = 14,
+                    Padding = new Thickness(5)
+                };
+                
+                ScrollViewer scroll = new ScrollViewer { Margin = new Thickness(10, 0, 0, 0) };
+                TextBlock textBlock = new TextBlock
+                {
+                    TextWrapping = TextWrapping.Wrap,
+                    FontSize = 16,
+                    Padding = new Thickness(15),
+                    Background = System.Windows.Media.Brushes.White,
+                    LineHeight = 24
+                };
+                scroll.Content = textBlock;
+
+                listBox.SelectionChanged += (s, ev) =>
+                {
+                    if (listBox.SelectedItem is HelpTopic selectedTopic)
+                    {
+                        textBlock.Text = selectedTopic.Content;
+                    }
+                };
+
+                Grid.SetColumn(listBox, 0);
+                Grid.SetColumn(scroll, 1);
+                grid.Children.Add(listBox);
+                grid.Children.Add(scroll);
+
+                helpWindow.Content = grid;
+                
+                if (topics.Count > 0) listBox.SelectedIndex = 0;
+
+                helpWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading help topics: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1179,6 +1722,20 @@ namespace AFPEngineer_Explorer
             }
         }
 
+        private string GetGithubToken()
+        {
+            string token = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
+            if (!string.IsNullOrEmpty(token)) return token;
+
+            string localFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "github_token.txt");
+            if (File.Exists(localFile)) return File.ReadAllText(localFile).Trim();
+
+            string userFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".afp_github_token");
+            if (File.Exists(userFile)) return File.ReadAllText(userFile).Trim();
+
+            return null;
+        }
+
         private async void AskAIBtn_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
@@ -1198,10 +1755,13 @@ namespace AFPEngineer_Explorer
 
             try
             {
-                string githubToken = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
+                string githubToken = GetGithubToken();
                 if (string.IsNullOrEmpty(githubToken))
                 {
-                    aiResponseTxt.Text = "Please set the GITHUB_TOKEN environment variable. You can set it globally or start the app from a terminal where it's set.";
+                    aiResponseTxt.Text = "No GitHub token found. Please do one of the following:\n" +
+                                         "1. Set a 'GITHUB_TOKEN' environment variable.\n" +
+                                         "2. Create a 'github_token.txt' file in the app directory.\n" +
+                                         $"3. Create a '.afp_github_token' file in your user folder ({Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}).";
                     return;
                 }
                 
@@ -1249,6 +1809,176 @@ In 3 concise bullet points, explain what this specific field acts as in the data
             {
                 btn.IsEnabled = true;
                 btn.Content = "✨ Explain Field with AI";
+            }
+        }
+
+        private async void AskAIGroupBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var node = btn?.Tag as AfpNode;
+            var aiResponseTxt = this.FindName("AiResponseTxt") as TextBox;
+            
+            if (node == null || aiResponseTxt == null || node.Children == null || node.Children.Count == 0) return;
+
+            btn.IsEnabled = false;
+            btn.Content = "✨ Thinking...";
+            aiResponseTxt.Visibility = Visibility.Visible;
+            aiResponseTxt.Text = "Generating group explanation...\n";
+
+            try
+            {
+                string githubToken = GetGithubToken();
+                if (string.IsNullOrEmpty(githubToken))
+                {
+                    aiResponseTxt.Text = "No GitHub token found. Please do one of the following:\n" +
+                                         "1. Set a 'GITHUB_TOKEN' environment variable.\n" +
+                                         "2. Create a 'github_token.txt' file in the app directory.\n" +
+                                         $"3. Create a '.afp_github_token' file in your user folder ({Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}).";
+                    return;
+                }
+                
+                var client = new OpenAI.OpenAIClient(new ApiKeyCredential(githubToken), new OpenAI.OpenAIClientOptions { Endpoint = new Uri("https://models.inference.ai.azure.com") });
+                var chatClient = client.GetChatClient("gpt-4o-mini");
+
+                // Provide a high-level summary of the group's contents
+                var summaryList = node.Children.Take(50).Select(c => $"- {c.Name}: {c.FriendlyName}");
+                string childrenContext = string.Join("\n", summaryList);
+                if (node.Children.Count > 50)
+                {
+                    childrenContext += $"\n... and {node.Children.Count - 50} more fields (truncated for context limits).";
+                }
+
+                string prompt = $@"
+You are an expert in the IBM AFP (Advanced Function Presentation) Datastream specification.
+I am analyzing an AFP group that starts with the '{node.Name}' ({node.DisplayName}) structured field. 
+Here are the nested structured fields contained within this group:
+{childrenContext}
+
+In 3-4 concise bullet points, explain the primary purpose of this specific group type in an AFP datastream and summarize what this specific sequence of fields is accomplishing at a high level.";
+
+                var responseStream = chatClient.CompleteChatStreamingAsync(new ChatMessage[]
+                {
+                    new SystemChatMessage("You are a helpful software engineering assistant specializing in print streams."),
+                    new UserChatMessage(prompt)
+                });
+
+                aiResponseTxt.Text = "";
+                await foreach (var update in responseStream)
+                {
+                    if (update.ContentUpdate != null)
+                    {
+                        foreach (var part in update.ContentUpdate)
+                        {
+                            aiResponseTxt.Text += part.Text;
+                            aiResponseTxt.ScrollToEnd(); 
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                aiResponseTxt.Text = $"Error getting AI response: {ex.Message}";
+            }
+            finally
+            {
+                btn.IsEnabled = true;
+                btn.Content = "✨ Explain Group Context";
+            }
+        }
+
+        private async void SendAIBtn_Click(object sender, RoutedEventArgs e)
+        {
+            await ProcessChatInput();
+        }
+
+        private async void ChatInputBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter && (System.Windows.Input.Keyboard.Modifiers & System.Windows.Input.ModifierKeys.Shift) != System.Windows.Input.ModifierKeys.Shift)
+            {
+                e.Handled = true;
+                await ProcessChatInput();
+            }
+        }
+
+        private async Task ProcessChatInput()
+        {
+            var chatInputBox = this.FindName("ChatInputBox") as TextBox;
+            var chatScrollViewer = this.FindName("ChatScrollViewer") as ScrollViewer;
+            var sendAIBtn = this.FindName("SendAIBtn") as Button;
+
+            if (chatInputBox == null || string.IsNullOrWhiteSpace(chatInputBox.Text) || sendAIBtn == null) return;
+
+            string userText = chatInputBox.Text.Trim();
+            chatInputBox.Text = "";
+            chatInputBox.IsEnabled = false;
+            sendAIBtn.IsEnabled = false;
+
+            // Add user message to UI
+            _chatHistoryUI.Add(new ChatMessageModel
+            {
+                Text = userText,
+                BackgroundBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E1F5FE")),
+                ForegroundBrush = System.Windows.Media.Brushes.Black,
+                Alignment = HorizontalAlignment.Right
+            });
+
+            _llmChatHistory.Add(new UserChatMessage(userText));
+
+            // Scroll to bottom
+            chatScrollViewer?.ScrollToBottom();
+
+            // Create loading placeholder
+            var aiResponseUi = new ChatMessageModel
+            {
+                Text = "...",
+                BackgroundBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F0F8FF")),
+                ForegroundBrush = System.Windows.Media.Brushes.Black,
+                Alignment = HorizontalAlignment.Left
+            };
+            _chatHistoryUI.Add(aiResponseUi);
+            chatScrollViewer?.ScrollToBottom();
+
+            try
+            {
+                string githubToken = GetGithubToken();
+                if (string.IsNullOrEmpty(githubToken))
+                {
+                    aiResponseUi.Text = "No GitHub token found. Please securely configure your token first.";
+                    return;
+                }
+
+                var client = new OpenAI.OpenAIClient(new ApiKeyCredential(githubToken), new OpenAI.OpenAIClientOptions { Endpoint = new Uri("https://models.inference.ai.azure.com") });
+                var chatClient = client.GetChatClient("gpt-4o-mini");
+
+                var responseStream = chatClient.CompleteChatStreamingAsync(_llmChatHistory);
+
+                aiResponseUi.Text = "";
+                string fullResponse = "";
+                await foreach (var update in responseStream)
+                {
+                    if (update.ContentUpdate != null)
+                    {
+                        foreach (var part in update.ContentUpdate)
+                        {
+                            fullResponse += part.Text;
+                            aiResponseUi.Text = fullResponse;
+                            chatScrollViewer?.ScrollToBottom();
+                        }
+                    }
+                }
+                
+                _llmChatHistory.Add(new AssistantChatMessage(fullResponse));
+            }
+            catch (Exception ex)
+            {
+                aiResponseUi.Text = $"Error getting AI response: {ex.Message}";
+                aiResponseUi.ForegroundBrush = System.Windows.Media.Brushes.DarkRed;
+            }
+            finally
+            {
+                chatInputBox.IsEnabled = true;
+                sendAIBtn.IsEnabled = true;
+                chatInputBox.Focus();
             }
         }
 
@@ -1339,6 +2069,149 @@ In 3 concise bullet points, explain what this specific field acts as in the data
             docCanvas.Width = canvasWidth;
             docCanvas.Height = canvasHeight;
 
+            // --- Font Mapping (Path A) ---
+            var fontMap = new Dictionary<byte, (string Name, double Size, FontWeight Weight, FontStyle Style)>();
+
+            string MapFocaFont(string focaName, out double sizeDips)
+            {
+                double ptSize = 10.0; // default point size
+                string fn = focaName.ToUpper().Trim();
+                
+                // Common IBM FOCA naming conventions often embed pitch or point size
+                if (fn.Contains("10")) ptSize = 12.0; // 10 pitch typically maps to ~12pt
+                else if (fn.Contains("12")) ptSize = 10.0; // 12 pitch maps to ~10pt
+                else if (fn.Contains("15")) ptSize = 8.0;
+                else if (fn.Contains("20")) ptSize = 6.0;
+
+                string mappedSystemFont = SettingsService.CurrentSettings.DefaultFont;
+
+                foreach (var mapping in SettingsService.CurrentSettings.FontMappings)
+                {
+                    if (fn.Contains(mapping.MatchString.ToUpper()) || fn.StartsWith(mapping.MatchString.ToUpper()))
+                    {
+                        mappedSystemFont = mapping.SystemFontName;
+                        break;
+                    }
+                }
+
+                // If the user's AFP has specific sizes in the name (like X0something07), try to catch them here if they aren't caught by the 0x1F triplet
+                if (fn.Contains("06")) ptSize = 6.0;
+                else if (fn.Contains("07")) ptSize = 7.0;
+                else if (fn.Contains("08")) ptSize = 8.0;
+                else if (fn.Contains("09")) ptSize = 9.0;
+
+                // WPF FontSize expects Device Independent Pixels (1/96 inch). 
+                // Typographic points are 1/72 inch. Therefore, to display 10pt text in WPF, FontSize must be 10 * (96/72).
+                sizeDips = ptSize * (96.0 / 72.0);
+                
+                return mappedSystemFont;
+            }
+
+            void BuildFontMap(AfpNode node)
+            {
+                if (node.Id == "D3AB8A") // MCF - Map Coded Font
+                {
+                    try
+                    {
+                        using (var reader = new BinaryReader(File.OpenRead(_currentFilePath)))
+                        {
+                            reader.BaseStream.Seek(node.Offset + 9, SeekOrigin.Begin);
+                            byte[] mcfData = reader.ReadBytes(node.Length);
+                            
+                            int pos = 0;
+                            while (pos + 1 < mcfData.Length) // Needs at least 2 bytes for rgLen
+                            {
+                                int rgLen = (mcfData[pos] << 8) | mcfData[pos + 1];
+                                if (rgLen < 2 || pos + rgLen > mcfData.Length) break;
+
+                                byte localId = 0;
+                                string fontName = "Courier New";
+                                double fontSize = 10.0;
+                                FontWeight fontWeight = FontWeights.Normal;
+                                FontStyle fontStyle = FontStyles.Normal;
+
+                                // Scan triplets within this mapped group
+                                int tripPos = pos + 2;
+                                int groupEnd = pos + rgLen;
+                                while (tripPos + 1 < groupEnd)
+                                {
+                                    int tLen = mcfData[tripPos];
+                                    if (tLen < 2 || tripPos + tLen > groupEnd) break;
+                                    byte tId = mcfData[tripPos + 1];
+
+                                    if (tId == 0x24 && tLen >= 4) // Resource Local Identifier
+                                    {
+                                        localId = mcfData[tripPos + 3];
+                                    }
+                                    else if (tId == 0x02 && tLen >= 4) // Fully Qualified Name (FQN)
+                                    {
+                                        byte fqnType = mcfData[tripPos + 2];
+                                        // 0x8E = Coded Font, 0x86 = Font Character Set, 0x85 = Code Page
+                                        if (fqnType == 0x8E || fqnType == 0x86)
+                                        {
+                                            byte fqnFmt = mcfData[tripPos + 3]; // Usually 0x00 for character string
+                                            if (fqnFmt == 0x00 && tLen > 4)
+                                            {
+                                                string focaName = ebcdic.GetString(mcfData, tripPos + 4, tLen - 4).Trim();
+                                                fontName = MapFocaFont(focaName, out fontSize);
+                                            }
+                                        }
+                                    }
+                                    else if (tId == 0x1F && tLen >= 20) // Font Descriptor Specification
+                                    {
+                                        byte ftWtClass = mcfData[tripPos + 2];
+                                        fontWeight = ftWtClass switch
+                                        {
+                                            0x01 => FontWeights.UltraLight,
+                                            0x02 => FontWeights.ExtraLight,
+                                            0x03 => FontWeights.Light,
+                                            0x04 => FontWeights.SemiBold, // Or Medium? Let's stick with closest mapping
+                                            0x05 => FontWeights.Normal,
+                                            0x06 => FontWeights.SemiBold,
+                                            0x07 => FontWeights.Bold,
+                                            0x08 => FontWeights.ExtraBold,
+                                            0x09 => FontWeights.UltraBold,
+                                            _ => FontWeights.Normal
+                                        };
+
+                                        int ftHeight = (mcfData[tripPos + 4] << 8) | mcfData[tripPos + 5];
+                                        if (ftHeight > 0)
+                                        {
+                                            // The value is in 1440ths of an inch.
+                                            // 1 point = 1/72 inch = 20/1440.
+                                            // Therefore, typographical point size is ftHeight / 20.0
+                                            double pts = ftHeight / 20.0;
+                                            
+                                            // Convert those typographical points (1/72) to WPF Device Independent Pixels (1/96)
+                                            fontSize = pts * (96.0 / 72.0);
+                                        }
+
+                                        byte ftDsFlags = mcfData[tripPos + 8];
+                                        if ((ftDsFlags & 0x80) == 0x80) // Bit 0 is Italic
+                                        {
+                                            fontStyle = FontStyles.Italic;
+                                        }
+                                    }
+                                    tripPos += tLen;
+                                }
+
+                                fontMap[localId] = (fontName, fontSize, fontWeight, fontStyle);
+                                pos += rgLen;
+                            }
+                        }
+                    }
+                    catch { }
+                }
+                foreach (var child in node.Children) BuildFontMap(child);
+            }
+
+            // Extract fonts from the entire document context (or just the active environment groups)
+            foreach (var docRoot in _flatNodeList.Where(n => n.Parent == null))
+            {
+                BuildFontMap(docRoot);
+            }
+            // -----------------------------
+
             // Find PTD (Presentation Text Descriptor) which defines the units for PTOCA movements
             // PTD is usually inside the Active Environment Group (BAG)
             double textResX = resX;
@@ -1387,6 +2260,29 @@ In 3 concise bullet points, explain what this specific field acts as in the data
             int ptxPayloadsParsed = 0;
             int textBlocksAdded = 0;
 
+            string currentFontName = "Courier New";
+            double currentFontSize = 10.0;
+            FontWeight currentFontWeight = FontWeights.Normal;
+            FontStyle currentFontStyle = FontStyles.Normal;
+            SolidColorBrush currentTextColor = System.Windows.Media.Brushes.Black;
+
+            SolidColorBrush GetOcaSolidColor(int ocaVal)
+            {
+                return ocaVal switch
+                {
+                    1 => System.Windows.Media.Brushes.Blue,
+                    2 => System.Windows.Media.Brushes.Red,
+                    3 => System.Windows.Media.Brushes.Magenta,
+                    4 => System.Windows.Media.Brushes.Green,
+                    5 => System.Windows.Media.Brushes.Cyan,
+                    6 => System.Windows.Media.Brushes.Yellow,
+                    7 => System.Windows.Media.Brushes.White,
+                    8 => System.Windows.Media.Brushes.Black,
+                    16 => System.Windows.Media.Brushes.Brown,
+                    _ => System.Windows.Media.Brushes.Black
+                };
+            }
+
             void ProcessNodeForPTX(AfpNode currentNode)
             {
                 if (currentNode.Name == "PTX")
@@ -1425,12 +2321,12 @@ In 3 concise bullet points, explain what this specific field acts as in the data
 
                                 if (csCode == 0xD3 || csCode == 0xD2) // AMB
                                 {
-                                    int val = (payload[dataStart] << 8) | payload[dataStart + 1];
+                                    short val = (short)((payload[dataStart] << 8) | payload[dataStart + 1]);
                                     currentY = (val / textResY) * 96.0;
                                 }
                                 else if (csCode == 0xC7 || csCode == 0xC6) // AMI
                                 {
-                                    int val = (payload[dataStart] << 8) | payload[dataStart + 1];
+                                    short val = (short)((payload[dataStart] << 8) | payload[dataStart + 1]);
                                     currentX = (val / textResX) * 96.0;
                                 }
                                 else if (csCode == 0xD5 || csCode == 0xD4) // RMB
@@ -1443,6 +2339,74 @@ In 3 concise bullet points, explain what this specific field acts as in the data
                                     short val = (short)((payload[dataStart] << 8) | payload[dataStart + 1]);
                                     currentX += (val / textResX) * 96.0;
                                 }
+                                else if (csCode == 0x75 || csCode == 0x74) // STC (Set Text Color)
+                                {
+                                    if (dataLen >= 2)
+                                    {
+                                        int colorVal = (payload[dataStart] << 8) | payload[dataStart + 1];
+                                        currentTextColor = GetOcaSolidColor(colorVal);
+                                    }
+                                }
+                                else if (csCode == 0x81 || csCode == 0x80) // SEC (Set Extended Text Color)
+                                {
+                                    if (dataLen >= 12)
+                                    {
+                                        byte colSpace = payload[dataStart + 1];
+                                        if (colSpace == 0x01) // RGB
+                                        {
+                                            byte rDim = payload[dataStart + 6];
+                                            byte gDim = payload[dataStart + 7];
+                                            byte bDim = payload[dataStart + 8];
+                                            if (rDim == 8 && gDim == 8 && bDim == 8 && dataLen >= 13)
+                                            {
+                                                byte r = payload[dataStart + 10];
+                                                byte g = payload[dataStart + 11];
+                                                byte b = payload[dataStart + 12];
+                                                currentTextColor = new SolidColorBrush(Color.FromRgb(r, g, b));
+                                            }
+                                        }
+                                        else if (colSpace == 0x04) // CMYK
+                                        {
+                                            byte cDim = payload[dataStart + 6];
+                                            byte mDim = payload[dataStart + 7];
+                                            byte yDim = payload[dataStart + 8];
+                                            byte kDim = payload[dataStart + 9];
+                                            if (cDim == 8 && mDim == 8 && yDim == 8 && kDim == 8 && dataLen >= 14)
+                                            {
+                                                byte c = payload[dataStart + 10];
+                                                byte m = payload[dataStart + 11];
+                                                byte y = payload[dataStart + 12];
+                                                byte k = payload[dataStart + 13];
+                                                byte r = (byte)(255 * (1 - c / 255.0) * (1 - k / 255.0));
+                                                byte gg = (byte)(255 * (1 - m / 255.0) * (1 - k / 255.0));
+                                                byte bb = (byte)(255 * (1 - y / 255.0) * (1 - k / 255.0));
+                                                currentTextColor = new SolidColorBrush(Color.FromRgb(r, gg, bb));
+                                            }
+                                        }
+                                        else if (colSpace == 0x08) // Standard OCA
+                                        {
+                                            if (dataLen >= 13)
+                                            {
+                                                int colorVal = (payload[dataStart + 10] << 8) | payload[dataStart + 11];
+                                                currentTextColor = GetOcaSolidColor(colorVal);
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (csCode == 0xF1 || csCode == 0xF0) // SCFL (Set Coded Font Local)
+                                {
+                                    if (dataLen >= 1)
+                                    {
+                                        byte localId = payload[dataStart];
+                                        if (fontMap.TryGetValue(localId, out var mappedFont))
+                                        {
+                                            currentFontName = mappedFont.Name;
+                                            currentFontSize = mappedFont.Size;
+                                            currentFontWeight = mappedFont.Weight;
+                                            currentFontStyle = mappedFont.Style;
+                                        }
+                                    }
+                                }
                                 else if (csCode == 0xDB || csCode == 0xDA) // TRN
                                 {
                                     if (dataLen > 0)
@@ -1454,17 +2418,22 @@ In 3 concise bullet points, explain what this specific field acts as in the data
                                         TextBlock tb = new TextBlock
                                         {
                                             Text = text,
-                                            FontFamily = new FontFamily("Courier New"),
-                                            FontSize = 10,
-                                            Foreground = System.Windows.Media.Brushes.Black
+                                            FontFamily = new FontFamily(currentFontName),
+                                            FontSize = currentFontSize,
+                                            FontWeight = currentFontWeight,
+                                            FontStyle = currentFontStyle,
+                                            Foreground = currentTextColor
                                         };
                                         Canvas.SetLeft(tb, currentX);
-                                        Canvas.SetTop(tb, currentY - 8);
+                                        // A slight offset adjustment since 0,0 for text is usually top-left in WPF but baseline in AFP
+                                        Canvas.SetTop(tb, currentY - currentFontSize);
                                         docCanvas.Children.Add(tb);
                                         textBlocksAdded++;
                                         
-                                        // Some fonts are roughly 6-7 pts wide. But TRN often moves coordinate via RMI/AMI.
-                                        currentX += text.Length * 6.0; 
+                                        // Auto-increment currentX by the actual measured width of the text block we just drew.
+                                        // This prevents overlap when consecutive TRN sequences or inline state changes occur.
+                                        tb.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
+                                        currentX += tb.DesiredSize.Width; 
                                     }
                                 }
                                 else if (csCode == 0xE7 || csCode == 0xE6) // DBR (Draw B-axis Rule)
@@ -1473,6 +2442,7 @@ In 3 concise bullet points, explain what this specific field acts as in the data
                                     {
                                         short ruleLength = (short)((payload[dataStart] << 8) | payload[dataStart + 1]);
                                         double rLength = (ruleLength / textResY) * 96.0;
+                                        if (ruleLength == 0x7FFF) rLength = (canvasHeight > currentY) ? (canvasHeight - currentY) : 0; // special "draw to margin" value
 
                                         double rWidth = 1.0; // Default width
                                         if (dataLen >= 5)
@@ -1486,16 +2456,19 @@ In 3 concise bullet points, explain what this specific field acts as in the data
                                                     fraction += 1.0 / (1 << (bit + 1));
                                             }
                                             rWidth = ((wVal1 + fraction) / textResX) * 96.0;
+                                            if (wVal1 == 0x7FFF) rWidth = (canvasWidth > currentX) ? (canvasWidth - currentX) : 0;
                                         }
 
                                         System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle
                                         {
                                             Width = Math.Max(1.0, Math.Abs(rWidth)),
                                             Height = Math.Max(1.0, Math.Abs(rLength)),
-                                            Fill = System.Windows.Media.Brushes.Black
+                                            Fill = currentTextColor
                                         };
                                         Canvas.SetLeft(rect, rWidth < 0 ? currentX + rWidth : currentX);
                                         Canvas.SetTop(rect, rLength < 0 ? currentY + rLength : currentY);
+                                        // Ensure rules rendered early don't completely trap text if there is overlap
+                                        Panel.SetZIndex(rect, -1);
                                         docCanvas.Children.Add(rect);
                                     }
                                 }
@@ -1505,6 +2478,7 @@ In 3 concise bullet points, explain what this specific field acts as in the data
                                     {
                                         short ruleLength = (short)((payload[dataStart] << 8) | payload[dataStart + 1]);
                                         double rLength = (ruleLength / textResX) * 96.0;
+                                        if (ruleLength == 0x7FFF) rLength = (canvasWidth > currentX) ? (canvasWidth - currentX) : 0; // special "draw to margin" value
 
                                         double rWidth = 1.0; // Default width
                                         if (dataLen >= 5)
@@ -1518,16 +2492,19 @@ In 3 concise bullet points, explain what this specific field acts as in the data
                                                     fraction += 1.0 / (1 << (bit + 1));
                                             }
                                             rWidth = ((wVal1 + fraction) / textResY) * 96.0;
+                                            if (wVal1 == 0x7FFF) rWidth = (canvasHeight > currentY) ? (canvasHeight - currentY) : 0;
                                         }
 
                                         System.Windows.Shapes.Rectangle rect = new System.Windows.Shapes.Rectangle
                                         {
                                             Width = Math.Max(1.0, Math.Abs(rLength)),
                                             Height = Math.Max(1.0, Math.Abs(rWidth)),
-                                            Fill = System.Windows.Media.Brushes.Black
+                                            Fill = currentTextColor
                                         };
                                         Canvas.SetLeft(rect, rLength < 0 ? currentX + rLength : currentX);
                                         Canvas.SetTop(rect, rWidth < 0 ? currentY + rWidth : currentY);
+                                        // Ensure rules rendered early don't completely trap text if there is overlap
+                                        Panel.SetZIndex(rect, -1);
                                         docCanvas.Children.Add(rect);
                                     }
                                 }
@@ -1611,10 +2588,68 @@ In 3 concise bullet points, explain what this specific field acts as in the data
                                         }
                                     }
 
-                                    double? targetWidth = null;
+                                double? targetWidth = null;
                                     double? targetHeight = null;
 
-                                    if (obdNode != null)
+                                    // First check IOB triplets for an Object Area Size override (0x4C)
+                                    // IOB payload typically has fixed params for the first 38 bytes or so, but let's scan for triplets based on spec.
+                                    // IOB triplets start at offset 24 (or 26 in some older versions? Wait, standard is:
+                                    // Obj Name: 0-7, Reserved: 8, Obj Type: 9, XoaOset: 10-12, YoaOset: 13-15, Rot: 16-17..
+                                    // Let's just find the 0x4C safely since it's specific to AFP. A full parser would use the offset provided in byte 24 or similar, 
+                                    // but we can just use the PGD/Active Environment Group units if found, or default to the resX/resY
+                                    bool foundIOB4C = false;
+                                    // The IOB triplet length starts at offset 26.
+                                    if (payload.Length > 26)
+                                    {
+                                        int iobTripStart = 26; // Default 
+                                        int iidx = iobTripStart;
+                                        double iobUnitsX = resX, iobUnitsY = resY; 
+                                        double iobXMult = 10.0, iobYMult = 10.0;
+
+                                        while (iidx + 1 < payload.Length)
+                                        {
+                                            int tLen = payload[iidx];
+                                            if (tLen < 2 || iidx + tLen > payload.Length) break;
+                                            byte tId = payload[iidx + 1];
+
+                                            if (tId == 0x4B && tLen >= 8) // Measurement override on IOB
+                                            {
+                                                byte xBase = payload[iidx + 2];
+                                                byte yBase = payload[iidx + 3];
+                                                iobXMult = xBase == 0x01 ? 3.93701 : 10.0;
+                                                iobYMult = yBase == 0x01 ? 3.93701 : 10.0;
+                                                iobUnitsX = (payload[iidx + 4] << 8) | payload[iidx + 5];
+                                                iobUnitsY = (payload[iidx + 6] << 8) | payload[iidx + 7];
+                                            }
+                                            else if (tId == 0x4C && tLen >= 9) // Area Size triplet on IOB
+                                            {
+                                                int xSize = (payload[iidx + 3] << 16) | (payload[iidx + 4] << 8) | payload[iidx + 5];
+                                                int ySize = (payload[iidx + 6] << 16) | (payload[iidx + 7] << 8) | payload[iidx + 8];
+                                                
+                                                if (iobUnitsX > 0 && iobUnitsY > 0)
+                                                {
+                                                    targetWidth = (xSize * iobXMult / iobUnitsX) * 96.0;
+                                                    targetHeight = (ySize * iobYMult / iobUnitsY) * 96.0;
+                                                    foundIOB4C = true;
+                                                }
+                                            }
+                                            iidx += tLen;
+                                        }
+                                    }
+
+                                    // If not defined by IOB, fallback to Extract OBD for intrinsic scaling
+                                    if (!foundIOB4C && targetBoc.Parent != null)
+                                    {
+                                        foreach (var sibling in targetBoc.Parent.Children)
+                                        {
+                                            if (sibling.Name == "OBD" && sibling.Offset < targetBoc.Offset)
+                                            {
+                                                obdNode = sibling;
+                                            }
+                                        }
+                                    }
+
+                                    if (!foundIOB4C && obdNode != null)
                                     {
                                         reader.BaseStream.Seek(obdNode.Offset + 9, SeekOrigin.Begin);
                                         byte[] obdData = reader.ReadBytes(obdNode.Length);
@@ -1665,10 +2700,10 @@ In 3 concise bullet points, explain what this specific field acts as in the data
                                         if (bocFullPayload[i] == 0x06 && bocFullPayload[i+1] == 0x07 && bocFullPayload[i+2] == 0x2B && bocFullPayload[i+3] == 0x12)
                                         {
                                             byte[] oidBytes = new byte[16];
-                                            int extractLen = Math.Min(16, bocFullPayload.Length - i);
+                                            int extractLen = Math.Min(9, bocFullPayload.Length - i);
                                             Array.Copy(bocFullPayload, i, oidBytes, 0, extractLen);
                                             string oidStr = BitConverter.ToString(oidBytes).Replace("-", "");
-                                            
+
                                             // Known PDF OIDs in MO:DCA
                                             if (oidStr == "06072B12000401011900000000000000" || // Single-page PDF
                                                 oidStr == "06072B12000401011A00000000000000" || // PDF Resource
@@ -1804,7 +2839,8 @@ In 3 concise bullet points, explain what this specific field acts as in the data
                                                     bitmap.StreamSource = ms;
                                                     bitmap.EndInit();
 
-                                                    var img = new Image { Source = bitmap };
+                                                    // Use Stretch.Fill to ensure the image precisely hits the target boundaries specified by AFP
+                                                    var img = new Image { Source = bitmap, Stretch = Stretch.Fill };
                                                     if (targetWidth.HasValue && targetHeight.HasValue)
                                                     {
                                                         img.Width = targetWidth.Value;
@@ -1857,5 +2893,14 @@ In 3 concise bullet points, explain what this specific field acts as in the data
             
             System.Diagnostics.Debug.WriteLine($"Parsed {ptxPayloadsParsed} PTX payloads, added {textBlocksAdded} text blocks to canvas.");
         }
+    }
+
+    public class HelpTopic
+    {
+        [System.Text.Json.Serialization.JsonPropertyName("Title")]
+        public string Title { get; set; }
+        
+        [System.Text.Json.Serialization.JsonPropertyName("Content")]
+        public string Content { get; set; }
     }
 }

@@ -1,8 +1,15 @@
+
 {
   "tripletId": "1F",
   "title": "Font Descriptor Specification (0x1F)",
-  "description": "Generic shell layout: capture entire triplet payload as an EBCDIC string and display as ASCII.",
+  "description": "Specifies the attributes of the desired font in a coded font reference.",
   "elements": [
-    { "offset": 2, "name": "1FWip", "type": "char", "encoding": "EBCDIC", "length": "variable", "description": "Capture entire triplet payload starting at offset 2 and display as converted ASCII" }
+    { "offset": 2, "name": "FtWtClass", "type": "hex", "length": 1, "description": "Specifies character stroke thickness", "enum": { "00": "Not specified", "01": "Ultra-light", "02": "Extra-light", "03": "Light", "04": "Semi-light", "05": "Medium (normal)", "06": "Semi-bold", "07": "Bold", "08": "Extra-bold", "09": "Ultra-bold" } },
+    { "offset": 3, "name": "FtWdClass", "type": "hex", "length": 1, "description": "Specifies character width-to-height ratio", "enum": { "00": "Not specified", "01": "Ultra-condensed", "02": "Extra-condensed", "03": "Condensed", "04": "Semi-condensed", "05": "Medium (normal)", "06": "Semi-expanded", "07": "Expanded", "08": "Extra-expanded", "09": "Ultra-expanded" } },
+    { "offset": 4, "name": "FtHeight", "type": "ubin", "length": 2, "description": "Specifies vertical font size in 1440ths of an inch (20ths of a point)" },
+    { "offset": 6, "name": "FtWidth", "type": "ubin", "length": 2, "description": "Specifies horizontal font size in 1440ths of an inch (20ths of a point)" },
+    { "offset": 8, "name": "FtDsFlags", "type": "bits", "length": 1, "description": "Qualifies the type of font characters (Italics, hollow, underscored, etc.)" },
+    { "offset": 9, "name": "Reserved", "type": "hex", "length": 10, "description": "Reserved; not checked" },
+    { "offset": 19, "name": "FtUsFlags", "type": "bits", "length": 1, "description": "Describes the font environment" }
   ]
 }

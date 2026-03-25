@@ -241,10 +241,9 @@ namespace AFPEngineer_Explorer.Services
                         }
                         groupConsumed = Math.Max(groupConsumed, (begin - baseOffset) + lengthToRead);
                         
-                        if (isRepeatingGroup && (field.DisplayName == "RGLength" || field.Name == "RGLength" || field.Name == "PMCid") && int.TryParse(parsedValue, out int rgLen) && rgLen > 0)
+                        if (isRepeatingGroup && (field.DisplayName == "RGLength" || field.Name == "RGLength" || field.Name == "PMCid") && int.TryParse(parsedValue, System.Globalization.NumberStyles.HexNumber, null, out int rgLen) && rgLen > 0)
                         {
                             groupEndIdx = Math.Min(payload.Length, baseOffset + rgLen);
-                            groupConsumed = Math.Max(groupConsumed, rgLen);
                         }
                     }
 

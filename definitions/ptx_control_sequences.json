@@ -19,7 +19,7 @@
     { "hexId": "81", "shortId": "SEC", "name": "Set Extended Text Color", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSSEC" },
     { "hexId": "75", "shortId": "STC", "name": "Set Text Color", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSSTC" },
     { "hexId": "F7", "shortId": "STO", "name": "Set Text Orientation", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSSTO" },
-    { "hexId": "E7", "shortId": "DBR", "name": "Draw B-axis Rule", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf" },
-    { "hexId": "E5", "shortId": "DIR", "name": "Draw I-axis Rule", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf" }
+    { "hexId": "E7", "shortId": "DBR", "name": "Draw B-axis Rule", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSDBR" },
+    { "hexId": "E5", "shortId": "DIR", "name": "Draw I-axis Rule", "url": "https://www.afpconsortium.org/uploads/1/1/8/4/118458708/ptoca-reference-04.pdf#nameddest=CSDIR" }
   ]
 }

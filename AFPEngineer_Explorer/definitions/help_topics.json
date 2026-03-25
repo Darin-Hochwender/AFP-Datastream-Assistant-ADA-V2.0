@@ -1,0 +1,26 @@
+[
+  {
+    "Title": "Overview: What is ADA?",
+    "Content": "ADA (AFP Datastream Assistant) is an advanced diagnostic and exploratory tool designed for engineers working with IBM Advanced Function Presentation (AFP) and Mixed Object Document Content Architecture (MO:DCA) datastreams.\n\nADA allows you to unpack complex datastream structures, visualize documents natively on-screen, search and extract Hex/Triplet values, and query an embedded AI specialized explicitly for AFP structures and presentation text objects."
+  },
+  {
+    "Title": "Opening and Exploring AFP Files",
+    "Content": "To begin analyzing an AFP file:\n\n1. Click the 'Open AFP File' button in the top left corner.\n2. Navigate to your target .afp, .out, or .prn file.\n3. The file will be parsed and loaded into the main tree hierarchy on the left pane.\n\nYou can click on any Structured Field (like BPG, PTX, or PGD) to review its raw Hexdump, parsed Tripets, and layout specifications in the 'Explore' tab."
+  },
+  {
+    "Title": "Using the Document Display",
+    "Content": "The 'Document Display' tab attempts to visually render the AFP page directly within ADA. It supports:\n\n- Parsing of Presentation Text Objects (PTOCA) and Baseline moves.\n- Real-time bounding logic for I-axis and B-axis rules (Draw Rules / Line Tables).\n- Native color matching via Set Text Color (STC) and Set Extended Text Color (SEC).\n- On-the-fly FOCA font mapping to TrueType desktop fonts.\n\nYou can turn pages using the 'Prev/Next Page' buttons and control the magnification using the zoom controls."
+  },
+  {
+    "Title": "Using the AI Find Tool",
+    "Content": "The 'AI Find' tool allows you to search through your datastream using natural language.\n\nInstead of hunting for specific hex codes:\n1. Type a query like 'Find the element that sets up the page size' or 'Where is the triplet for Fully Qualified Name?'.\n2. Click 'AI Find'.\n3. ADA will consult its internal dictionary of Structured Fields, PTOCA commands, and Triplets. It will provide an explanation, and if applicable, automatically navigate the tree to the relevant item."
+  },
+  {
+    "Title": "Viewing Images and Containers",
+    "Content": "If your AFP file contains embedded Object Containers (such as TIFFs or JPEGs enclosed in BOC/EOC boundaries):\n\n1. Select the BOC (Begin Object Container) in the tree view.\n2. If ADA detects a supported image format, a 'View Container Image' button will appear.\n3. Clicking it will unpack the internal byte payload, reconstruct it, and display it inside the 'Container Image' tab visually."
+  },
+  {
+    "Title": "Extracting a TLE Report (CSV)",
+    "Content": "You can extract all Tag Logical Elements (TLEs) associated with Named Groups (BNG tags) into a clean, flat CSV file. This is incredibly useful for generating audit lists or reconciliation reports of indexes within massive spool files.\n\nTo generate the report:\n1. Ensure an AFP file is open.\n2. Click 'Extract' in the top menu bar, then 'TLE Report'.\n3. ADA will iterate through each BNG group, aggregate its TLEs, map them to known columns (like AccountId, DocumentDescription, ZipCd), and output an export file named 'TLE_Report_<filename>_<date>.csv' directly to your Windows Downloads folder."
+  }
+]
